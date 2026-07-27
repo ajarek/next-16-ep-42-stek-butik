@@ -1,0 +1,38 @@
+export const steaks = [
+  {
+    title: "Porterhouse",
+    price: "249.00 PLN / kg",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCKaypRD2ImB9HRGRNuvtqLZQICyHUaFWiKSMxyU1BfeKnKfaj6xle0KKWkJ3WwOb8BnmqghYJrNoNq6clVMVZLy5rkfsTuQ27MEUpNhKt0T7DPZDwGuUubSjaX3kesGXfubvob0tRdREQH7yJSESgTl6E3ZcHYMAxE_xgXHmiAE9xzflsKxUz5BuTpvj9VCW3Z2-LFa4jzAK5-TFII0pv12e8MQZ3e3ocj48pnJBEIp3chbjsUvogajiRdNOmycNNqp8ikCF0ochs",
+    tag: "PREMIUM SELECTION",
+    desc: "Doskonałe połączenie dwóch światów: soczystej polędwicy i intensywnie marmurkowatego antrykotu. Porterhouse to król stołu – idealnie wyprofilowany stek, który zadowoli każdego smakosza.",
+    weight: "1.1 - 1.4 kg",
+    grade: "A5 Wagyu",
+  },
+  {
+    title: "Ribeye z kością",
+    price: "195.00 PLN / kg",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAmd5EhSqBxzLrAh1wBBauIHVFnAD4wifqx1K6ZPKKHeRJTzmifTk8oGyXhC7NbcOJuXw8z1NxrI3noIYf__3h0oWwK9Swwh0KcSft4BBQXjHsU0BaGIsYMvtiW3EIL0V6iMC2YQqeqFiTO0foVJtY0xPbM9fOwsPRIjQeojV9f_ZxCu3ag6v5wyc6fZ7tH5Ai10cXcczsXYuGhYXSpbxguHf7sgS0oJ9h4pnE4GYSy3da9rCWkaupaM3xZ-AXqsup0sUXfHthnsFel",
+    tag: "DRY AGED 28 DAYS",
+    desc: "Królewski stek wołowy, ceniony za intensywny, maślany aromat i idealne marmurkowanie. Długie, suche dojrzewanie wydobywa jego głęboki smak i kruchość.",
+    weight: "1.2 - 1.5 kg",
+    grade: "USDA Prime",
+  },
+  {
+    title: "Tenderloin",
+    price: "310.00 PLN / kg",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDtwTy3gWDuXWH2Vr_4OBs_YVPJDj3jUU5ZD8OcTcghgYCVJS-JHNIzHVYmbRO6nXnUABbwIKqI9U4VoOGtKsNn6uWGk9vkPiLbxxDcQESx-DnnHvYlAaIwppz5Cxv8UqWGsXnwd6tsNqsg-jE38FTEiCFIx2R-tVEh5e_1luQ4YHpPLwj6xHEAILr5BFqpLx66jiX_rurcLH9q71ADkT6B_mnEq8mJ5oQMxnVNCb4_oRov2iZjHQS2AvvZRH4JhmwwoLoMQTJpa2T0",
+    tag: "MOST TENDER",
+    desc: "Najdelikatniejszy stek wołowy, znany na całym świecie ze swojej niezwykłej kruchości. Idealny dla osób ceniących subtelny smak i rozpływającą się w ustach teksturę.",
+    weight: "0.8 - 1.2 kg",
+    grade: "Choice",
+  },
+  {
+    title: "Strip Steak",
+    price: "178.00 PLN / kg",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDnM0PDnGNP3ruG17FZcvVGnioeWvovq3Lx8JL4rPe9689obO0EDuqnUfVFbhDHVKLKX72qsmSYBn7cHOBKqjdA2_EB7rs7DMtPTDVXNduuH9O6MjQmXiJCUvoOAojvonIj-cIk2OsFfSY4_JAd3cQJh8jmGz5NvczE1eBQFY7rdnKxeoY0NqMG8s5Nr0sHNHWNd8joDkbufVLBLUogkatlWKI9Afy8eVOiaZUi5VdnJgNYbkEIdgjvblcyM7f8Fzh9dC99rHcoBMe_",
+    tag: "CLASSIC CUT",
+    desc: "Klasyczny wybór dla miłośników tradycyjnych steków. Charakteryzuje się równomiernym marmurkowaniem i wyrazistym smakiem, który zachwyca swoją prostotą.",
+    weight: "1.0 - 1.3 kg",
+    grade: "Prime",
+  },
+]
