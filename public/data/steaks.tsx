@@ -1,5 +1,5 @@
 export const steaks = [
-  {
+  { id: 1,
     title: "Porterhouse",
     price: "249.00 PLN / kg",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCKaypRD2ImB9HRGRNuvtqLZQICyHUaFWiKSMxyU1BfeKnKfaj6xle0KKWkJ3WwOb8BnmqghYJrNoNq6clVMVZLy5rkfsTuQ27MEUpNhKt0T7DPZDwGuUubSjaX3kesGXfubvob0tRdREQH7yJSESgTl6E3ZcHYMAxE_xgXHmiAE9xzflsKxUz5BuTpvj9VCW3Z2-LFa4jzAK5-TFII0pv12e8MQZ3e3ocj48pnJBEIp3chbjsUvogajiRdNOmycNNqp8ikCF0ochs",
@@ -7,8 +7,15 @@ export const steaks = [
     desc: "Doskonałe połączenie dwóch światów: soczystej polędwicy i intensywnie marmurkowatego antrykotu. Porterhouse to król stołu – idealnie wyprofilowany stek, który zadowoli każdego smakosza.",
     weight: "1.1 - 1.4 kg",
     grade: "A5 Wagyu",
+    detail_images: [
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuANF4mecds1gfY08HM-pRRQQyMTwAEl6_jcmpe2fR7067WEuX4MtyH6MtBs5Jvq_5Y3d18sPAZedslQXVu_Zlvc9eu-2YFmxr4xE0bbTzr045-TgK6e_SbV1nqLb4OMmq37c4rk5k16H4HKfCTyWzjVXRD8r5NdAVHNilr-2JeAcz4ps3H6gtulJfoiI1aOX4ieRVEyMinMwNqKWuaWD4csAaU-xMNktMW6Ayx5M_nBmf8EBVdAC0ZN5dOPiEiN8qbfUDm2f5aFbeZQ",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuALM4KT1z-nVKT8e_mwP198lkvsGIwzvXqr7TxO3HpDKtSx7Zx_Fxqawueidcw7WcNGhspnqi4c-a_r9obnRcIZ_g4b7MzYRbM5FhANqNxDvt_37HcRjXxfp5VnZBaG3ZeR7P4WezZ8xaHv9czd1Oo72fp8h2VnmhIsuew5qPOYfrQqaMiJUzknHSJ6QRpJevNxKx8WACLYetR7Zu5PdMuNw7VvkRZJtou_VWtO6lhBzxmmZ6NW17lmEmLQcYgUnH-OvuhrzrPQZH-i",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWL9RN2w1nLNyZewK8097vjH64uu0kuE6wl5uslWW4cZQ_2ZTDPkOo_ATqJToLqohl5z4HHWvJ3q5wybdcgqZaf6qEke4QkR_R_-_yF4VZBopPZaIj9WfzW5Q1-YwlWFyb1pDxxMU4WRZ_AzLfEfRYLKe-7KCuCoAxy0kVGSpWNrn7D-pgLW0WgIXNr4fXOcAusjEkKsc94_3gwKqVb7xzfbn5rHU3fJsP_xi17TwlXJN-Cn_3hg2WiJJ46qjDZ70cMv8iezQsdUu",
+    ],
+    movie:"https://lh3.googleusercontent.com/aida-public/AB6AXuAHhsz3cJ4nYNVP0FI-NcvJHj2GHCc6TLc1qCdj5VWJ3pbd16nHKGktlRBrppIS2IVCpUmWjwTM9eSvfI3iKt-YPXsdf2lhGVFm1V-63t5m5dj41vkh2o6kF_yCDSztipIReh0vd2tFt3MmmZQTpX9sQncDNWGT91ZcocQBk4JTLsEl3RR7jz05Uw6QBC1PcRzTUQvXsbZ8B5LlG-j6FWWc2YNl8kDQmpc52ieLaXRoVj85GJaisYQ3Ab3CGweBB1Eiqrqq2FSS-fBK",
   },
   {
+    id: 2,
     title: "Ribeye z kością",
     price: "195.00 PLN / kg",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAmd5EhSqBxzLrAh1wBBauIHVFnAD4wifqx1K6ZPKKHeRJTzmifTk8oGyXhC7NbcOJuXw8z1NxrI3noIYf__3h0oWwK9Swwh0KcSft4BBQXjHsU0BaGIsYMvtiW3EIL0V6iMC2YQqeqFiTO0foVJtY0xPbM9fOwsPRIjQeojV9f_ZxCu3ag6v5wyc6fZ7tH5Ai10cXcczsXYuGhYXSpbxguHf7sgS0oJ9h4pnE4GYSy3da9rCWkaupaM3xZ-AXqsup0sUXfHthnsFel",
@@ -16,8 +23,15 @@ export const steaks = [
     desc: "Królewski stek wołowy, ceniony za intensywny, maślany aromat i idealne marmurkowanie. Długie, suche dojrzewanie wydobywa jego głęboki smak i kruchość.",
     weight: "1.2 - 1.5 kg",
     grade: "USDA Prime",
+    detail_images: [
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuANF4mecds1gfY08HM-pRRQQyMTwAEl6_jcmpe2fR7067WEuX4MtyH6MtBs5Jvq_5Y3d18sPAZedslQXVu_Zlvc9eu-2YFmxr4xE0bbTzr045-TgK6e_SbV1nqLb4OMmq37c4rk5k16H4HKfCTyWzjVXRD8r5NdAVHNilr-2JeAcz4ps3H6gtulJfoiI1aOX4ieRVEyMinMwNqKWuaWD4csAaU-xMNktMW6Ayx5M_nBmf8EBVdAC0ZN5dOPiEiN8qbfUDm2f5aFbeZQ",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuALM4KT1z-nVKT8e_mwP198lkvsGIwzvXqr7TxO3HpDKtSx7Zx_Fxqawueidcw7WcNGhspnqi4c-a_r9obnRcIZ_g4b7MzYRbM5FhANqNxDvt_37HcRjXxfp5VnZBaG3ZeR7P4WezZ8xaHv9czd1Oo72fp8h2VnmhIsuew5qPOYfrQqaMiJUzknHSJ6QRpJevNxKx8WACLYetR7Zu5PdMuNw7VvkRZJtou_VWtO6lhBzxmmZ6NW17lmEmLQcYgUnH-OvuhrzrPQZH-i",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWL9RN2w1nLNyZewK8097vjH64uu0kuE6wl5uslWW4cZQ_2ZTDPkOo_ATqJToLqohl5z4HHWvJ3q5wybdcgqZaf6qEke4QkR_R_-_yF4VZBopPZaIj9WfzW5Q1-YwlWFyb1pDxxMU4WRZ_AzLfEfRYLKe-7KCuCoAxy0kVGSpWNrn7D-pgLW0WgIXNr4fXOcAusjEkKsc94_3gwKqVb7xzfbn5rHU3fJsP_xi17TwlXJN-Cn_3hg2WiJJ46qjDZ70cMv8iezQsdUu",
+    ],
+    movie:"https://lh3.googleusercontent.com/aida-public/AB6AXuAHhsz3cJ4nYNVP0FI-NcvJHj2GHCc6TLc1qCdj5VWJ3pbd16nHKGktlRBrppIS2IVCpUmWjwTM9eSvfI3iKt-YPXsdf2lhGVFm1V-63t5m5dj41vkh2o6kF_yCDSztipIReh0vd2tFt3MmmZQTpX9sQncDNWGT91ZcocQBk4JTLsEl3RR7jz05Uw6QBC1PcRzTUQvXsbZ8B5LlG-j6FWWc2YNl8kDQmpc52ieLaXRoVj85GJaisYQ3Ab3CGweBB1Eiqrqq2FSS-fBK",
   },
   {
+    id: 3,
     title: "Tenderloin",
     price: "310.00 PLN / kg",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDtwTy3gWDuXWH2Vr_4OBs_YVPJDj3jUU5ZD8OcTcghgYCVJS-JHNIzHVYmbRO6nXnUABbwIKqI9U4VoOGtKsNn6uWGk9vkPiLbxxDcQESx-DnnHvYlAaIwppz5Cxv8UqWGsXnwd6tsNqsg-jE38FTEiCFIx2R-tVEh5e_1luQ4YHpPLwj6xHEAILr5BFqpLx66jiX_rurcLH9q71ADkT6B_mnEq8mJ5oQMxnVNCb4_oRov2iZjHQS2AvvZRH4JhmwwoLoMQTJpa2T0",
@@ -25,8 +39,14 @@ export const steaks = [
     desc: "Najdelikatniejszy stek wołowy, znany na całym świecie ze swojej niezwykłej kruchości. Idealny dla osób ceniących subtelny smak i rozpływającą się w ustach teksturę.",
     weight: "0.8 - 1.2 kg",
     grade: "Choice",
+    detail_images: [
+      "https://7xbeef.com/wp-content/uploads/2021/05/Delmonico-2-V-e1621369544791-600x400.jpg",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuALM4KT1z-nVKT8e_mwP198lkvsGIwzvXqr7TxO3HpDKtSx7Zx_Fxqawueidcw7WcNGhspnqi4c-a_r9obnRcIZ_g4b7MzYRbM5FhANqNxDvt_37HcRjXxfp5VnZBaG3ZeR7P4WezZ8xaHv9czd1Oo72fp8h2VnmhIsuew5qPOYfrQqaMiJUzknHSJ6QRpJevNxKx8WACLYetR7Zu5PdMuNw7VvkRZJtou_VWtO6lhBzxmmZ6NW17lmEmLQcYgUnH-OvuhrzrPQZH-i",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWL9RN2w1nLNyZewK8097vjH64uu0kuE6wl5uslWW4cZQ_2ZTDPkOo_ATqJToLqohl5z4HHWvJ3q5wybdcgqZaf6qEke4QkR_R_-_yF4VZBopPZaIj9WfzW5Q1-YwlWFyb1pDxxMU4WRZ_AzLfEfRYLKe-7KCuCoAxy0kVGSpWNrn7D-pgLW0WgIXNr4fXOcAusjEkKsc94_3gwKqVb7xzfbn5rHU3fJsP_xi17TwlXJN-Cn_3hg2WiJJ46qjDZ70cMv8iezQsdUu",
+    ],
+    movie:"https://lh3.googleusercontent.com/aida-public/AB6AXuAHhsz3cJ4nYNVP0FI-NcvJHj2GHCc6TLc1qCdj5VWJ3pbd16nHKGktlRBrppIS2IVCpUmWjwTM9eSvfI3iKt-YPXsdf2lhGVFm1V-63t5m5dj41vkh2o6kF_yCDSztipIReh0vd2tFt3MmmZQTpX9sQncDNWGT91ZcocQBk4JTLsEl3RR7jz05Uw6QBC1PcRzTUQvXsbZ8B5LlG-j6FWWc2YNl8kDQmpc52ieLaXRoVj85GJaisYQ3Ab3CGweBB1Eiqrqq2FSS-fBK",
   },
-  {
+  { id: 4,
     title: "Strip Steak",
     price: "178.00 PLN / kg",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDnM0PDnGNP3ruG17FZcvVGnioeWvovq3Lx8JL4rPe9689obO0EDuqnUfVFbhDHVKLKX72qsmSYBn7cHOBKqjdA2_EB7rs7DMtPTDVXNduuH9O6MjQmXiJCUvoOAojvonIj-cIk2OsFfSY4_JAd3cQJh8jmGz5NvczE1eBQFY7rdnKxeoY0NqMG8s5Nr0sHNHWNd8joDkbufVLBLUogkatlWKI9Afy8eVOiaZUi5VdnJgNYbkEIdgjvblcyM7f8Fzh9dC99rHcoBMe_",
@@ -34,5 +54,11 @@ export const steaks = [
     desc: "Klasyczny wybór dla miłośników tradycyjnych steków. Charakteryzuje się równomiernym marmurkowaniem i wyrazistym smakiem, który zachwyca swoją prostotą.",
     weight: "1.0 - 1.3 kg",
     grade: "Prime",
+    detail_images: [
+      "https://7xbeef.com/wp-content/uploads/2021/05/Delmonico-2-V-e1621369544791-600x400.jpg",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuALM4KT1z-nVKT8e_mwP198lkvsGIwzvXqr7TxO3HpDKtSx7Zx_Fxqawueidcw7WcNGhspnqi4c-a_r9obnRcIZ_g4b7MzYRbM5FhANqNxDvt_37HcRjXxfp5VnZBaG3ZeR7P4WezZ8xaHv9czd1Oo72fp8h2VnmhIsuew5qPOYfrQqaMiJUzknHSJ6QRpJevNxKx8WACLYetR7Zu5PdMuNw7VvkRZJtou_VWtO6lhBzxmmZ6NW17lmEmLQcYgUnH-OvuhrzrPQZH-i",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWL9RN2w1nLNyZewK8097vjH64uu0kuE6wl5uslWW4cZQ_2ZTDPkOo_ATqJToLqohl5z4HHWvJ3q5wybdcgqZaf6qEke4QkR_R_-_yF4VZBopPZaIj9WfzW5Q1-YwlWFyb1pDxxMU4WRZ_AzLfEfRYLKe-7KCuCoAxy0kVGSpWNrn7D-pgLW0WgIXNr4fXOcAusjEkKsc94_3gwKqVb7xzfbn5rHU3fJsP_xi17TwlXJN-Cn_3hg2WiJJ46qjDZ70cMv8iezQsdUu",
+    ],
+    movie:"https://lh3.googleusercontent.com/aida-public/AB6AXuAHhsz3cJ4nYNVP0FI-NcvJHj2GHCc6TLc1qCdj5VWJ3pbd16nHKGktlRBrppIS2IVCpUmWjwTM9eSvfI3iKt-YPXsdf2lhGVFm1V-63t5m5dj41vkh2o6kF_yCDSztipIReh0vd2tFt3MmmZQTpX9sQncDNWGT91ZcocQBk4JTLsEl3RR7jz05Uw6QBC1PcRzTUQvXsbZ8B5LlG-j6FWWc2YNl8kDQmpc52ieLaXRoVj85GJaisYQ3Ab3CGweBB1Eiqrqq2FSS-fBK",
   },
 ]

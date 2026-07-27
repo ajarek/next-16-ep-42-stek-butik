@@ -28,7 +28,7 @@ const BestSteaks = () => {
         {steaks.map((item, idx) => (
           <Link
             key={idx}
-            href='/product/ribeye'
+            href={`/products/${item.id}`}
             className=' group relative aspect-4/5 overflow-hidden block'
           >
             <Image

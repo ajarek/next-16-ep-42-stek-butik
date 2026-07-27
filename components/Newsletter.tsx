@@ -1,12 +1,23 @@
 "use client"
 
 import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+import { toast } from "./ui/toast"
 
 const Newsletter = () => {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // Tutaj możesz dodać logikę formularza
-    alert('Dziękujemy za zapis do newslettera! Zapisano email: '+(e.currentTarget[0] as HTMLInputElement).value)
+   toast.promise(
+      new Promise<{ name: string }>((resolve) => {
+        window.setTimeout(() => resolve({ name: "Dziękujemy za zapis do newslettera!" }), 2000)
+      }),
+      {
+        loading: "Zapisywanie...",
+        success: (data) => `${data.name}`,
+        error: "Nie udało się zapisać do newslettera.",
+      }
+    )
     e.currentTarget.reset()
   }
 
@@ -25,8 +36,8 @@ const Newsletter = () => {
           className='flex flex-col md:flex-row gap-4'
           onSubmit={handleFormSubmit}
         >
-          <input
-            className='flex-1 bg-chart-1 border-none focus:ring-0 text-foreground  h-14 px-6'
+          <Input
+            className='flex-1 bg-chart-1 border-none rounded-none focus:ring-0 focus:border-none  text-foreground text-lg min-h-14 px-6'
             placeholder='Twój adres e-mail'
             type='email'
             required
