@@ -61,16 +61,17 @@ const ProductDetailsPage = ({
             />
           </div>
           <div className='aspect-square overflow-hidden border border-white text-background hover:border-primary transition-colors cursor-pointer group relative'>
-            <Image
-              className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-60'
-              alt={steak.title}
+            <iframe
+              width='100%'
+              height='100%'
               src={steak.movie}
-              width={200}
-              height={200}
-            />
-            <div className='absolute inset-0 flex items-center justify-center'>
-              <CirclePlay className='size-12 text-background' />
-            </div>
+              title='YouTube video player'
+              frameBorder='0'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+              referrerPolicy='strict-origin-when-cross-origin'
+              allowFullScreen
+              className='absolute inset-0'
+            ></iframe>
           </div>
         </div>
       </div>

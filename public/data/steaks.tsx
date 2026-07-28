@@ -1,5 +1,6 @@
 export const steaks = [
-  { id: 1,
+  {
+    id: 1,
     title: "Porterhouse",
     price: "249.00",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCKaypRD2ImB9HRGRNuvtqLZQICyHUaFWiKSMxyU1BfeKnKfaj6xle0KKWkJ3WwOb8BnmqghYJrNoNq6clVMVZLy5rkfsTuQ27MEUpNhKt0T7DPZDwGuUubSjaX3kesGXfubvob0tRdREQH7yJSESgTl6E3ZcHYMAxE_xgXHmiAE9xzflsKxUz5BuTpvj9VCW3Z2-LFa4jzAK5-TFII0pv12e8MQZ3e3ocj48pnJBEIp3chbjsUvogajiRdNOmycNNqp8ikCF0ochs",
@@ -8,13 +9,13 @@ export const steaks = [
     weight: "1.1 - 1.4 kg",
     grade: "A5 Wagyu",
     detail_images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuANF4mecds1gfY08HM-pRRQQyMTwAEl6_jcmpe2fR7067WEuX4MtyH6MtBs5Jvq_5Y3d18sPAZedslQXVu_Zlvc9eu-2YFmxr4xE0bbTzr045-TgK6e_SbV1nqLb4OMmq37c4rk5k16H4HKfCTyWzjVXRD8r5NdAVHNilr-2JeAcz4ps3H6gtulJfoiI1aOX4ieRVEyMinMwNqKWuaWD4csAaU-xMNktMW6Ayx5M_nBmf8EBVdAC0ZN5dOPiEiN8qbfUDm2f5aFbeZQ",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuALM4KT1z-nVKT8e_mwP198lkvsGIwzvXqr7TxO3HpDKtSx7Zx_Fxqawueidcw7WcNGhspnqi4c-a_r9obnRcIZ_g4b7MzYRbM5FhANqNxDvt_37HcRjXxfp5VnZBaG3ZeR7P4WezZ8xaHv9czd1Oo72fp8h2VnmhIsuew5qPOYfrQqaMiJUzknHSJ6QRpJevNxKx8WACLYetR7Zu5PdMuNw7VvkRZJtou_VWtO6lhBzxmmZ6NW17lmEmLQcYgUnH-OvuhrzrPQZH-i",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWL9RN2w1nLNyZewK8097vjH64uu0kuE6wl5uslWW4cZQ_2ZTDPkOo_ATqJToLqohl5z4HHWvJ3q5wybdcgqZaf6qEke4QkR_R_-_yF4VZBopPZaIj9WfzW5Q1-YwlWFyb1pDxxMU4WRZ_AzLfEfRYLKe-7KCuCoAxy0kVGSpWNrn7D-pgLW0WgIXNr4fXOcAusjEkKsc94_3gwKqVb7xzfbn5rHU3fJsP_xi17TwlXJN-Cn_3hg2WiJJ46qjDZ70cMv8iezQsdUu",
+      "https://miensko.pl/environment/cache/images/productGfx_1046_500_500/stek-wolowy-swiezy-porterhouse.jpg",
+      "https://www.dobremiecho.pl/wp-content/uploads/2022/04/Portherhouse-stek-sezonowany.png",
+      "https://www.fitmeat.at/media/94/d9/42/1634816294/fitmeat-rindfleisch-porterhouse-steak-4.jpg",
     ],
-    movie:"https://lh3.googleusercontent.com/aida-public/AB6AXuAHhsz3cJ4nYNVP0FI-NcvJHj2GHCc6TLc1qCdj5VWJ3pbd16nHKGktlRBrppIS2IVCpUmWjwTM9eSvfI3iKt-YPXsdf2lhGVFm1V-63t5m5dj41vkh2o6kF_yCDSztipIReh0vd2tFt3MmmZQTpX9sQncDNWGT91ZcocQBk4JTLsEl3RR7jz05Uw6QBC1PcRzTUQvXsbZ8B5LlG-j6FWWc2YNl8kDQmpc52ieLaXRoVj85GJaisYQ3Ab3CGweBB1Eiqrqq2FSS-fBK",
-    lineage:"Podlasie",
-    marbling:"BMS 7-9",
+    movie: "https://www.youtube.com/embed/AxEEiC9noro?si=4xXbEB3XX3NgwDND",
+    lineage: "Podlasie",
+    marbling: "BMS 7-9",
   },
   {
     id: 2,
@@ -26,13 +27,14 @@ export const steaks = [
     weight: "1.2 - 1.5 kg",
     grade: "USDA Prime",
     detail_images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuANF4mecds1gfY08HM-pRRQQyMTwAEl6_jcmpe2fR7067WEuX4MtyH6MtBs5Jvq_5Y3d18sPAZedslQXVu_Zlvc9eu-2YFmxr4xE0bbTzr045-TgK6e_SbV1nqLb4OMmq37c4rk5k16H4HKfCTyWzjVXRD8r5NdAVHNilr-2JeAcz4ps3H6gtulJfoiI1aOX4ieRVEyMinMwNqKWuaWD4csAaU-xMNktMW6Ayx5M_nBmf8EBVdAC0ZN5dOPiEiN8qbfUDm2f5aFbeZQ",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuALM4KT1z-nVKT8e_mwP198lkvsGIwzvXqr7TxO3HpDKtSx7Zx_Fxqawueidcw7WcNGhspnqi4c-a_r9obnRcIZ_g4b7MzYRbM5FhANqNxDvt_37HcRjXxfp5VnZBaG3ZeR7P4WezZ8xaHv9czd1Oo72fp8h2VnmhIsuew5qPOYfrQqaMiJUzknHSJ6QRpJevNxKx8WACLYetR7Zu5PdMuNw7VvkRZJtou_VWtO6lhBzxmmZ6NW17lmEmLQcYgUnH-OvuhrzrPQZH-i",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWL9RN2w1nLNyZewK8097vjH64uu0kuE6wl5uslWW4cZQ_2ZTDPkOo_ATqJToLqohl5z4HHWvJ3q5wybdcgqZaf6qEke4QkR_R_-_yF4VZBopPZaIj9WfzW5Q1-YwlWFyb1pDxxMU4WRZ_AzLfEfRYLKe-7KCuCoAxy0kVGSpWNrn7D-pgLW0WgIXNr4fXOcAusjEkKsc94_3gwKqVb7xzfbn5rHU3fJsP_xi17TwlXJN-Cn_3hg2WiJJ46qjDZ70cMv8iezQsdUu",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSUnM8Nys5bGofq-8J20iF6Xq96zaJNv0QwVGfB0f4LhoQJ-gflMesmS5l&s=10",
+      "https://www.dobremiecho.pl/wp-content/uploads/2021/04/Stek-tomahawk-.png",
+      "https://super-stek.pl/1519-medium_default/tomahawk-stek-z-antrykotu-z-koscia-polska.jpg",
     ],
-    movie:"https://lh3.googleusercontent.com/aida-public/AB6AXuAHhsz3cJ4nYNVP0FI-NcvJHj2GHCc6TLc1qCdj5VWJ3pbd16nHKGktlRBrppIS2IVCpUmWjwTM9eSvfI3iKt-YPXsdf2lhGVFm1V-63t5m5dj41vkh2o6kF_yCDSztipIReh0vd2tFt3MmmZQTpX9sQncDNWGT91ZcocQBk4JTLsEl3RR7jz05Uw6QBC1PcRzTUQvXsbZ8B5LlG-j6FWWc2YNl8kDQmpc52ieLaXRoVj85GJaisYQ3Ab3CGweBB1Eiqrqq2FSS-fBK",
-    lineage:"Wielkopolska",
-    marbling:"BMS 7-9",
+    movie:
+      "https://www.youtube.com/embed/8SxsOPa-lJQ?si=f8ATTmUPL7WU_dDq",
+    lineage: "Wielkopolska",
+    marbling: "BMS 7-9",
   },
   {
     id: 3,
@@ -44,15 +46,17 @@ export const steaks = [
     weight: "0.8 - 1.2 kg",
     grade: "Choice",
     detail_images: [
-      "https://7xbeef.com/wp-content/uploads/2021/05/Delmonico-2-V-e1621369544791-600x400.jpg",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuALM4KT1z-nVKT8e_mwP198lkvsGIwzvXqr7TxO3HpDKtSx7Zx_Fxqawueidcw7WcNGhspnqi4c-a_r9obnRcIZ_g4b7MzYRbM5FhANqNxDvt_37HcRjXxfp5VnZBaG3ZeR7P4WezZ8xaHv9czd1Oo72fp8h2VnmhIsuew5qPOYfrQqaMiJUzknHSJ6QRpJevNxKx8WACLYetR7Zu5PdMuNw7VvkRZJtou_VWtO6lhBzxmmZ6NW17lmEmLQcYgUnH-OvuhrzrPQZH-i",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWL9RN2w1nLNyZewK8097vjH64uu0kuE6wl5uslWW4cZQ_2ZTDPkOo_ATqJToLqohl5z4HHWvJ3q5wybdcgqZaf6qEke4QkR_R_-_yF4VZBopPZaIj9WfzW5Q1-YwlWFyb1pDxxMU4WRZ_AzLfEfRYLKe-7KCuCoAxy0kVGSpWNrn7D-pgLW0WgIXNr4fXOcAusjEkKsc94_3gwKqVb7xzfbn5rHU3fJsP_xi17TwlXJN-Cn_3hg2WiJJ46qjDZ70cMv8iezQsdUu",
+      "https://goodstockbynolanryan.com/cdn/shop/articles/Prime-Filet_c5c3c4d3-225b-4e96-bccc-a4fd0a751692_720x.jpg?v=1754495362",
+      "https://bbq.pl/img/p/7/5/75-large_default.jpg",
+      "https://www.firstlight.farm/us/wp-content/uploads/2023/11/xUntitled-design-591.jpg",
     ],
-    movie:"https://lh3.googleusercontent.com/aida-public/AB6AXuAHhsz3cJ4nYNVP0FI-NcvJHj2GHCc6TLc1qCdj5VWJ3pbd16nHKGktlRBrppIS2IVCpUmWjwTM9eSvfI3iKt-YPXsdf2lhGVFm1V-63t5m5dj41vkh2o6kF_yCDSztipIReh0vd2tFt3MmmZQTpX9sQncDNWGT91ZcocQBk4JTLsEl3RR7jz05Uw6QBC1PcRzTUQvXsbZ8B5LlG-j6FWWc2YNl8kDQmpc52ieLaXRoVj85GJaisYQ3Ab3CGweBB1Eiqrqq2FSS-fBK",
-    lineage:"Mazowsze",
-    marbling:"BMS 7-9",
+    movie:
+      "https://www.youtube.com/embed/SUaGUC1a5fo?si=NJI6ulk6fCyvcDrb",
+    lineage: "Mazowsze",
+    marbling: "BMS 7-9",
   },
-  { id: 4,
+  {
+    id: 4,
     title: "Strip Steak",
     price: "178.00",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDnM0PDnGNP3ruG17FZcvVGnioeWvovq3Lx8JL4rPe9689obO0EDuqnUfVFbhDHVKLKX72qsmSYBn7cHOBKqjdA2_EB7rs7DMtPTDVXNduuH9O6MjQmXiJCUvoOAojvonIj-cIk2OsFfSY4_JAd3cQJh8jmGz5NvczE1eBQFY7rdnKxeoY0NqMG8s5Nr0sHNHWNd8joDkbufVLBLUogkatlWKI9Afy8eVOiaZUi5VdnJgNYbkEIdgjvblcyM7f8Fzh9dC99rHcoBMe_",
@@ -65,8 +69,9 @@ export const steaks = [
       "https://lh3.googleusercontent.com/aida-public/AB6AXuALM4KT1z-nVKT8e_mwP198lkvsGIwzvXqr7TxO3HpDKtSx7Zx_Fxqawueidcw7WcNGhspnqi4c-a_r9obnRcIZ_g4b7MzYRbM5FhANqNxDvt_37HcRjXxfp5VnZBaG3ZeR7P4WezZ8xaHv9czd1Oo72fp8h2VnmhIsuew5qPOYfrQqaMiJUzknHSJ6QRpJevNxKx8WACLYetR7Zu5PdMuNw7VvkRZJtou_VWtO6lhBzxmmZ6NW17lmEmLQcYgUnH-OvuhrzrPQZH-i",
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWL9RN2w1nLNyZewK8097vjH64uu0kuE6wl5uslWW4cZQ_2ZTDPkOo_ATqJToLqohl5z4HHWvJ3q5wybdcgqZaf6qEke4QkR_R_-_yF4VZBopPZaIj9WfzW5Q1-YwlWFyb1pDxxMU4WRZ_AzLfEfRYLKe-7KCuCoAxy0kVGSpWNrn7D-pgLW0WgIXNr4fXOcAusjEkKsc94_3gwKqVb7xzfbn5rHU3fJsP_xi17TwlXJN-Cn_3hg2WiJJ46qjDZ70cMv8iezQsdUu",
     ],
-    movie:"https://lh3.googleusercontent.com/aida-public/AB6AXuAHhsz3cJ4nYNVP0FI-NcvJHj2GHCc6TLc1qCdj5VWJ3pbd16nHKGktlRBrppIS2IVCpUmWjwTM9eSvfI3iKt-YPXsdf2lhGVFm1V-63t5m5dj41vkh2o6kF_yCDSztipIReh0vd2tFt3MmmZQTpX9sQncDNWGT91ZcocQBk4JTLsEl3RR7jz05Uw6QBC1PcRzTUQvXsbZ8B5LlG-j6FWWc2YNl8kDQmpc52ieLaXRoVj85GJaisYQ3Ab3CGweBB1Eiqrqq2FSS-fBK",
-    lineage:"Mazowsze",
-    marbling:"BMS 7-9",
+    movie:
+      "https://www.youtube.com/embed/EMUs4Z7hDtU?si=etVfnePbKr3HsZD1",
+    lineage: "Mazowsze",
+    marbling: "BMS 7-9",
   },
 ]
