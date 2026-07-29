@@ -25,7 +25,7 @@ const BestSteaks = () => {
         </Link>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-        {steaks.map((item, idx) => (
+        {steaks.slice(0, 4).map((item, idx) => (
           <Link
             key={idx}
             href={`/products/${item.id}`}

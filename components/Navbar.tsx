@@ -30,14 +30,14 @@ const navLinks = [
     icon: Utensils,
   },
   {
-    name: "Sezonowane",
+    name: "Produkty",
     href: "/products",
     badge: "DRY AGED",
     badgeColor: "bg-amber-500/20 text-amber-300 border-amber-500/30",
     icon: Flame,
   },
   {
-    name: "Antrykot (Ribeye)",
+    name: "Antrykot ",
     href: "/products/2",
     badge: "BESTSELLER",
     badgeColor: "bg-red-500/20 text-red-300 border-red-500/30",
@@ -51,12 +51,12 @@ const navLinks = [
     icon: Award,
   },
   {
-    name: "Polędwica (Tenderloin)",
+    name: "Polędwica ",
     href: "/products/3",
     icon: ShieldCheck,
   },
   {
-    name: "Rostbef (Strip Steak)",
+    name: "Rostbef ",
     href: "/products/4",
     icon: Utensils,
   },
@@ -93,36 +93,28 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className='hidden md:flex items-center gap-8'>
-          <Link
-            href='/'
-            className='text-primary-foreground font-medium text-lg hover:text-amber-300 transition-colors duration-200'
-          >
-            Home
-          </Link>
-          <Link
-            href='/products'
-            className='text-primary-foreground font-medium text-lg hover:text-amber-300 transition-colors duration-200'
-          >
-            Sezonowane
-          </Link>
-          <Link
-            href='/products/2'
-            className='text-primary-foreground font-medium text-lg hover:text-amber-300 transition-colors duration-200'
-          >
-            Antrykot
-          </Link>
-          <Link
-            href='/products/4'
-            className='text-primary-foreground font-medium text-lg hover:text-amber-300 transition-colors duration-200'
-          >
-            Rostbef
-          </Link>
-          <Link
-            href='/products/3'
-            className='text-primary-foreground font-medium text-lg hover:text-amber-300 transition-colors duration-200'
-          >
-            Polędwica
-          </Link>
+          {navLinks.map((link, idx) => {
+            return (
+              <motion.div
+                key={link.name}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * idx }}
+              >
+                <Link
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className='group flex items-center justify-between p-3 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-200'
+                >
+                  <div className='flex items-center gap-3.5'>
+                    <span className='text-sm font-medium text-slate-200 group-hover:text-white'>
+                      {link.name}
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            )
+          })}
         </div>
 
         {/* Desktop & Mobile Actions */}
