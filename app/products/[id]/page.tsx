@@ -1,9 +1,10 @@
 "use client"
 import { steaks } from "@/public/data/steaks"
-import { CirclePlay, ShieldCheck, Truck } from "lucide-react"
+import { CirclePlay, ShieldCheck, Truck, ShoppingCart, Check } from "lucide-react"
 import Image from "next/image"
 import React, { use, useState } from "react"
 import { Button } from "@/components/ui/button"
+import { useCartStore } from "@/store/cartStore"
 
 const ProductDetailsPage = ({
   params,
@@ -11,7 +12,10 @@ const ProductDetailsPage = ({
   params: Promise<{ id: string }>
 }) => {
   const [weight, setWeight] = useState<number>(1)
+  const [isAdded, setIsAdded] = useState<boolean>(false)
   const { id } = use(params)
+  const addItemToCart = useCartStore((state) => state.addItemToCart)
+
   const steak = steaks.find((s) => s.id === Number(id))
   if (!steak) {
     return (
@@ -20,6 +24,28 @@ const ProductDetailsPage = ({
       </div>
     )
   }
+
+  const handleAddToCart = () => {
+    const calculatedPrice = Number(steak.price) * weight
+    const weightLabel = weight === 1 ? "1kg" : `${weight * 1000}g`
+
+    addItemToCart({
+      id: `${steak.id}-${weightLabel}`,
+      name: steak.title,
+      image: steak.img || steak.detail_images[0],
+      description: steak.desc,
+      price: calculatedPrice,
+      quantity: 1,
+      category: steak.tag || "Stek",
+      weight: weightLabel,
+    })
+
+    setIsAdded(true)
+    setTimeout(() => {
+      setIsAdded(false)
+    }, 2000)
+  }
+
   return (
     <section className='min-h-screen  flex-col bg-foreground p-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start py-20'>
       <div className='lg:col-span-7 space-y-6'>
@@ -103,7 +129,11 @@ const ProductDetailsPage = ({
             </label>
             <div className='grid grid-cols-3 gap-2'>
               <Button
-                className='h-10 rounded-none text-background hover:border-primary  uppercase transition-all focus:border-primary cursor-pointer'
+                className={`h-10 rounded-none uppercase transition-all cursor-pointer ${
+                  weight === 0.3
+                    ? "bg-primary text-background border-primary"
+                    : "text-background hover:border-primary border-white/30"
+                }`}
                 onClick={() => {
                   setWeight(0.3)
                 }}
@@ -111,7 +141,11 @@ const ProductDetailsPage = ({
                 300g
               </Button>
               <Button
-                className='h-10 rounded-none text-background hover:border-primary  uppercase transition-all focus:border-primary cursor-pointer'
+                className={`h-10 rounded-none uppercase transition-all cursor-pointer ${
+                  weight === 0.5
+                    ? "bg-primary text-background border-primary"
+                    : "text-background hover:border-primary border-white/30"
+                }`}
                 onClick={() => {
                   setWeight(0.5)
                 }}
@@ -119,7 +153,11 @@ const ProductDetailsPage = ({
                 500g
               </Button>
               <Button
-                className='h-10 rounded-none text-background hover:border-primary uppercase transition-all focus:border-primary cursor-pointer'
+                className={`h-10 rounded-none uppercase transition-all cursor-pointer ${
+                  weight === 1
+                    ? "bg-primary text-background border-primary"
+                    : "text-background hover:border-primary border-white/30"
+                }`}
                 onClick={() => {
                   setWeight(1)
                 }}
@@ -142,9 +180,22 @@ const ProductDetailsPage = ({
           </div>
         </div>
         <div className='flex flex-col gap-4'>
-          <Button className='h-12 w-full bg-primary text-background  font-bold uppercase  tracking-widest active:scale-[0.98] transition-all hover:brightness-110 cursor-pointer ro  rounded-none'>
-            Dodaj do koszyka — {(Number(steak.price) * weight).toFixed(2)}{" "}
-            {`PLN`}
+          <Button
+            onClick={handleAddToCart}
+            className='h-12 w-full bg-primary text-background font-bold uppercase tracking-widest active:scale-[0.98] transition-all hover:brightness-110 cursor-pointer rounded-none flex items-center justify-center gap-2'
+          >
+            {isAdded ? (
+              <>
+                <Check className='w-5 h-5 text-emerald-950' />
+                Dodano do koszyka!
+              </>
+            ) : (
+              <>
+                <ShoppingCart className='w-5 h-5' />
+                Dodaj do koszyka — {(Number(steak.price) * weight).toFixed(2)}{" "}
+                {`PLN`}
+              </>
+            )}
           </Button>
           <Button className='h-12 w-full border bg-foreground/30  border-background text-background  font-bold uppercase tracking-widest hover:bg-foreground/10 transition-all active:scale-[0.98] cursor-pointer rounded-none'>
             Kup teraz z dostawą jutro
@@ -170,3 +221,4 @@ const ProductDetailsPage = ({
 }
 
 export default ProductDetailsPage
+

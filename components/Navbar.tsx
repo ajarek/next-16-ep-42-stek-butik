@@ -24,6 +24,8 @@ import {
   ShoppingBag,
 } from "lucide-react"
 
+import { useCartStore } from "@/store/cartStore"
+
 const navLinks = [
   {
     name: "Strona Główna",
@@ -66,6 +68,17 @@ const navLinks = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const [mounted, setMounted] = useState(false)
+
+  const items = useCartStore((state) => state.items)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const cartCount = mounted
+    ? items.reduce((acc, item) => acc + (item.quantity ?? 1), 0)
+    : 0
 
   // Lock body scroll when mobile menu is active
   useEffect(() => {
@@ -132,12 +145,12 @@ const Navbar = () => {
 
           {/* Shopping Cart Shortcut */}
           <Link
-            href='/products'
+            href='/cart'
             className='relative hover:scale-105 transition-transform'
           >
             <ShoppingCart className='w-6 h-6 text-primary-foreground' />
             <span className='absolute -top-2 -right-2 bg-amber-400 text-slate-950 text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold shadow-md'>
-              3
+              {cartCount}
             </span>
           </Link>
 
@@ -321,12 +334,12 @@ const Navbar = () => {
               {/* Drawer Bottom Mobile Quick Actions */}
               <div className='p-4 bg-slate-900 border-t border-white/10 space-y-3'>
                 <Link
-                  href='/products'
+                  href='/cart'
                   onClick={() => setIsOpen(false)}
                   className='w-full py-3 px-4 rounded-xl bg-linear-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-red-900/30 transition-all active:scale-[0.98]'
                 >
                   <ShoppingBag className='w-4 h-4' />
-                  <span>Przejdź do koszyka (3)</span>
+                  <span>Przejdź do koszyka ({cartCount})</span>
                 </Link>
 
                 <div className='flex items-center justify-around text-slate-400 text-xs pt-1'>

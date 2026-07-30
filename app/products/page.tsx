@@ -4,7 +4,7 @@ import Link from "next/link"
 
 const ProductsPage = () => {
   return (
-     <section className='min-h-screen flex flex-col gap-8 bg-foreground px-8'>
+     <section className='min-h-screen flex flex-col gap-8 bg-foreground p-8'>
       <div className='flex flex-col md:flex-row justify-between items-center py-16'>
         <div className='max-w-2xl'>
           <h2 className='font-semibold text-3xl text-background mb-4'>
@@ -16,19 +16,14 @@ const ProductsPage = () => {
             najwyższą jakość i świeżość.
           </p>
         </div>
-        <Link
-          href='/cuts'
-          className='font-lg text-primary uppercase border-b border-primary hover:text-secondary hover:border-secondary transition-colors'
-        >
-          Zobacz wszystkie kategorie
-        </Link>
+        
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
         {steaks.map((item, idx) => (
           <Link
             key={idx}
             href={`/products/${item.id}`}
-            className=' group relative aspect-4/5 overflow-hidden block'
+            className=' group relative aspect-4/5 overflow-hidden block border border-chart-1 hover:border-primary transition-colors cursor-pointer'
           >
             <Image
               className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'
