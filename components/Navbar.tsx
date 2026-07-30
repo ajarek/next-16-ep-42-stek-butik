@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "motion/react"
+import { Button } from "./ui/button"
 import {
   Menu,
   X,
@@ -120,14 +121,14 @@ const Navbar = () => {
         {/* Desktop & Mobile Actions */}
         <div className='flex items-center gap-4 md:gap-6'>
           {/* Desktop Search Icon */}
-          <button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
+          <Button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
             <Search className='w-5 h-5' />
-          </button>
+          </Button>
 
           {/* Desktop Favorites */}
-          <button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
+          <Button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
             <Heart className='w-5 h-5' />
-          </button>
+          </Button>
 
           {/* Shopping Cart Shortcut */}
           <Link
@@ -141,12 +142,12 @@ const Navbar = () => {
           </Link>
 
           {/* User Icon (Desktop) */}
-          <button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
+          <Button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
             <User className='w-5 h-5' />
-          </button>
+          </Button>
 
           {/* Mobile Hamburger Toggle Button */}
-          <button
+          <Button
             onClick={() => setIsOpen(!isOpen)}
             aria-label='Toggle Mobile Menu'
             className='md:hidden relative z-50 p-2 text-primary-foreground focus:outline-none rounded-full hover:bg-white/10 transition-colors'
@@ -161,7 +162,7 @@ const Navbar = () => {
                 <Menu className='w-6 h-6' />
               )}
             </motion.div>
-          </button>
+          </Button>
         </div>
       </nav>
 
@@ -203,12 +204,12 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                <button
+                <Button
                   onClick={() => setIsOpen(false)}
                   className='p-2 rounded-full bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white transition-all'
                 >
                   <X className='w-5 h-5' />
-                </button>
+                </Button>
               </div>
 
               {/* Drawer Body - Scrollable */}
@@ -329,13 +330,13 @@ const Navbar = () => {
                 </Link>
 
                 <div className='flex items-center justify-around text-slate-400 text-xs pt-1'>
-                  <button className='flex items-center gap-1 hover:text-white transition-colors'>
+                  <Button className='flex items-center gap-1 hover:text-white transition-colors'>
                     <Heart className='w-4 h-4 text-red-400' /> Ulubione
-                  </button>
+                  </Button>
                   <span className='text-slate-700'>•</span>
-                  <button className='flex items-center gap-1 hover:text-white transition-colors'>
+                  <Button className='flex items-center gap-1 hover:text-white transition-colors'>
                     <User className='w-4 h-4 text-amber-400' /> Moje Konto
-                  </button>
+                  </Button>
                 </div>
               </div>
             </motion.div>

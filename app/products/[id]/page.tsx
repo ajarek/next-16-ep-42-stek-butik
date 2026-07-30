@@ -3,6 +3,7 @@ import { steaks } from "@/public/data/steaks"
 import { CirclePlay, ShieldCheck, Truck } from "lucide-react"
 import Image from "next/image"
 import React, { use, useState } from "react"
+import { Button } from "@/components/ui/button"
 
 const ProductDetailsPage = ({
   params,
@@ -101,30 +102,30 @@ const ProductDetailsPage = ({
               Wybierz Wagę
             </label>
             <div className='grid grid-cols-3 gap-2'>
-              <button
-                className='border border-white text-background hover:border-primary py-3 font-label-sm text-label-sm uppercase transition-all focus:border-primary cursor-pointer'
+              <Button
+                className='h-10 rounded-none text-background hover:border-primary  uppercase transition-all focus:border-primary cursor-pointer'
                 onClick={() => {
                   setWeight(0.3)
                 }}
               >
                 300g
-              </button>
-              <button
-                className='border border-white text-background hover:border-primary py-3 font-label-sm text-label-sm uppercase transition-all focus:border-primary cursor-pointer'
+              </Button>
+              <Button
+                className='h-10 rounded-none text-background hover:border-primary  uppercase transition-all focus:border-primary cursor-pointer'
                 onClick={() => {
                   setWeight(0.5)
                 }}
               >
                 500g
-              </button>
-              <button
-                className='border border-white text-background hover:border-primary py-3 font-label-sm text-label-sm uppercase transition-all focus:border-primary cursor-pointer'
+              </Button>
+              <Button
+                className='h-10 rounded-none text-background hover:border-primary uppercase transition-all focus:border-primary cursor-pointer'
                 onClick={() => {
                   setWeight(1)
                 }}
               >
                 1kg
-              </button>
+              </Button>
             </div>
           </div>
           <div className='grid grid-cols-2 gap-4'>
@@ -141,13 +142,13 @@ const ProductDetailsPage = ({
           </div>
         </div>
         <div className='flex flex-col gap-4'>
-          <button className='w-full bg-primary text-background py-5 font-bold uppercase  tracking-widest active:scale-[0.98] transition-all hover:brightness-110 cursor-pointer'>
+          <Button className='h-12 w-full bg-primary text-background  font-bold uppercase  tracking-widest active:scale-[0.98] transition-all hover:brightness-110 cursor-pointer ro  rounded-none'>
             Dodaj do koszyka — {(Number(steak.price) * weight).toFixed(2)}{" "}
             {`PLN`}
-          </button>
-          <button className='w-full border bg-foreground/30  border-background text-background py-5 font-bold uppercase tracking-widest hover:bg-foreground/10 transition-all active:scale-[0.98] cursor-pointer'>
+          </Button>
+          <Button className='h-12 w-full border bg-foreground/30  border-background text-background  font-bold uppercase tracking-widest hover:bg-foreground/10 transition-all active:scale-[0.98] cursor-pointer rounded-none'>
             Kup teraz z dostawą jutro
-          </button>
+          </Button>
         </div>
         <div className='flex items-center gap-6 pt-4 border-t border-white text-background'>
           <div className='flex items-center gap-2'>
