@@ -25,6 +25,8 @@ import {
 } from "lucide-react"
 
 import { useCartStore } from "@/store/cartStore"
+import { useAuthStore } from "@/store/authStore"
+import AuthModal from "./AuthModal"
 
 const navLinks = [
   {
@@ -69,8 +71,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [mounted, setMounted] = useState(false)
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
 
   const items = useCartStore((state) => state.items)
+  const { user, loading } = useAuthStore()
 
   useEffect(() => {
     setMounted(true)
@@ -155,9 +159,24 @@ const Navbar = () => {
           </Link>
 
           {/* User Icon (Desktop) */}
-          <Button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
-            <User className='w-5 h-5' />
-          </Button>
+          {user ? (
+            <div className="hidden md:flex items-center gap-2">
+              <Link
+                href="/profile"
+                className="flex items-center gap-2 hover:scale-105 transition-transform text-amber-400"
+              >
+                <User className='w-5 h-5' />
+                <span className="text-xs font-bold">{user.email?.split('@')[0]}</span>
+              </Link>
+            </div>
+          ) : (
+            <Button 
+              onClick={() => setIsAuthModalOpen(true)}
+              className="hidden md:flex items-center gap-2 hover:scale-105 transition-transform text-primary-foreground"
+            >
+              <User className='w-5 h-5' />
+            </Button>
+          )}
 
           {/* Mobile Hamburger Toggle Button */}
           <Button
@@ -212,7 +231,7 @@ const Navbar = () => {
                       Stek Butik App
                     </div>
                     <div className='text-sm font-bold text-white'>
-                      Witaj w Rzeźni Premium
+                      {user ? `Witaj, ${user.email?.split('@')[0]}` : 'Witaj w Rzeźni Premium'}
                     </div>
                   </div>
                 </div>
@@ -347,8 +366,14 @@ const Navbar = () => {
                     <Heart className='w-4 h-4 text-red-400' /> Ulubione
                   </Button>
                   <span className='text-slate-700'>•</span>
-                  <Button className='flex items-center gap-1 hover:text-white transition-colors'>
-                    <User className='w-4 h-4 text-amber-400' /> Moje Konto
+                  <Button 
+                    onClick={() => {
+                      setIsOpen(false)
+                      setIsAuthModalOpen(true)
+                    }}
+                    className={`flex items-center gap-1 transition-colors ${user ? 'text-amber-400' : 'hover:text-white'}`}
+                  >
+                    <User className='w-4 h-4' /> {user ? 'Konto' : 'Logowanie'}
                   </Button>
                 </div>
               </div>
@@ -356,6 +381,11 @@ const Navbar = () => {
           </>
         )}
       </AnimatePresence>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+      />
     </>
   )
 }

@@ -1,0 +1,102 @@
+import { db } from "@/lib/firebase";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  Timestamp,
+} from "firebase/firestore";
+import type { Product } from "@/types/typeProduct";
+
+export type TransactionStatus = "pending" | "confirmed" | "shipped" | "delivered";
+
+export interface TransactionItem {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
+
+export interface Transaction {
+  id?: string;
+  userId: string;
+  userEmail: string;
+  items: TransactionItem[];
+  totalAmount: number;
+  deliveryMethod: "courier" | "pickup";
+  paymentMethod: "card" | "transfer" | "cod";
+  status: TransactionStatus;
+  createdAt: Timestamp;
+}
+
+const TRANSACTIONS_COLLECTION = "transactions";
+
+/**
+ * Create a new transaction in Firestore.
+ */
+export async function createTransaction(
+  userId: string,
+  userEmail: string,
+  cartItems: Product[],
+  deliveryMethod: "courier" | "pickup",
+  paymentMethod: "card" | "transfer" | "cod",
+  totalAmount: number
+): Promise<string> {
+  const items: TransactionItem[] = cartItems.map((item) => ({
+    productId: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity ?? 1,
+    image: item.image,
+  }));
+
+  const transaction: Omit<Transaction, "id"> = {
+    userId,
+    userEmail,
+    items,
+    totalAmount,
+    deliveryMethod,
+    paymentMethod,
+    status: "pending",
+    createdAt: Timestamp.now(),
+  };
+
+  const docRef = await addDoc(collection(db, TRANSACTIONS_COLLECTION), transaction);
+  return docRef.id;
+}
+
+/**
+ * Fetch all transactions for a specific user.
+ */
+export async function getUserTransactions(userId: string): Promise<Transaction[]> {
+  const q = query(
+    collection(db, TRANSACTIONS_COLLECTION),
+    where("userId", "==", userId),
+    orderBy("createdAt", "desc")
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  } as Transaction));
+}
+
+/**
+ * Human-readable status labels (Polish).
+ */
+export const transactionStatusLabels: Record<TransactionStatus, string> = {
+  pending: "Oczekuje na potwierdzenie",
+  confirmed: "Potwierdzone",
+  shipped: "W dostawie",
+  delivered: "Dostarczone",
+};
+
+export const transactionStatusColors: Record<TransactionStatus, string> = {
+  pending: "text-amber-400 bg-amber-400/10 border-amber-400/30",
+  confirmed: "text-blue-400 bg-blue-400/10 border-blue-400/30",
+  shipped: "text-purple-400 bg-purple-400/10 border-purple-400/30",
+  delivered: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
+};

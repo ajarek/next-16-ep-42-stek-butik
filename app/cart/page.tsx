@@ -19,9 +19,13 @@ import {
   ArrowRight,
   Info,
   CheckCircle2,
+  LogIn,
 } from "lucide-react"
 import { useCartStore } from "@/store/cartStore"
+import { useAuthStore } from "@/store/authStore"
 import { Button } from "@/components/ui/button"
+import { createTransaction } from "@/lib/services/transactionService"
+import AuthModal from "@/components/AuthModal"
 
 export default function CartPage() {
   const [mounted, setMounted] = useState(false)
@@ -33,9 +37,12 @@ export default function CartPage() {
   >("card")
   const [isOrdering, setIsOrdering] = useState(false)
   const [orderCompleted, setOrderCompleted] = useState(false)
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
+  const [orderId, setOrderId] = useState<string | null>(null)
 
   const { items, increment, decrement, removeItemFromCart, removeAllFromCart } =
     useCartStore()
+  const { user } = useAuthStore()
 
   useEffect(() => {
     setMounted(true)
@@ -60,14 +67,30 @@ export default function CartPage() {
   const discount = itemsTotal > 0 ? 20.0 : 0
   const grandTotal = Math.max(0, itemsTotal + deliveryCost - discount)
 
-  const handleOrder = () => {
+  const handleOrder = async () => {
     if (items.length === 0) return
+    if (!user) {
+      setIsAuthModalOpen(true)
+      return
+    }
     setIsOrdering(true)
-    setTimeout(() => {
-      setIsOrdering(false)
-      setOrderCompleted(true)
+    try {
+      const id = await createTransaction(
+        user.uid,
+        user.email ?? "",
+        items,
+        deliveryMethod,
+        paymentMethod,
+        grandTotal
+      )
+      setOrderId(id)
       removeAllFromCart()
-    }, 1500)
+      setOrderCompleted(true)
+    } catch (err) {
+      console.error("Order error:", err)
+    } finally {
+      setIsOrdering(false)
+    }
   }
 
   if (orderCompleted) {
@@ -84,7 +107,15 @@ export default function CartPage() {
             Twoje wykwintne cięcia wołowe zostały przekazane do przygotowania.
             Wkrótce otrzymasz potwierdzenie zamówienia oraz informacje o dostawie chłodniczej.
           </p>
-          <div className='pt-4'>
+          {orderId && (
+            <p className='text-xs text-slate-500 font-mono'>ID zamówienia: {orderId}</p>
+          )}
+          <div className='pt-4 flex flex-col gap-3'>
+            <Link href='/profile'>
+              <Button className='w-full h-12 bg-emerald-700 hover:bg-emerald-600 text-white font-bold uppercase tracking-widest rounded-none cursor-pointer'>
+                Moje Zamówienia
+              </Button>
+            </Link>
             <Link href='/products'>
               <Button className='w-full h-12 bg-primary text-background font-bold uppercase tracking-widest rounded-none hover:brightness-110 cursor-pointer'>
                 Wróć do sklepu
@@ -182,7 +213,7 @@ export default function CartPage() {
                             >
                               <Minus className='w-3.5 h-3.5' />
                             </button>
-                            <span className='px-3 text-xs font-bold text-background min-w-[2rem] text-center'>
+                            <span className='px-3 text-xs font-bold text-background min-w-8 text-center'>
                               {quantity}
                             </span>
                             <button
@@ -398,6 +429,16 @@ export default function CartPage() {
                 </span>
               </div>
 
+              {/* Auth prompt */}
+              {!user && (
+                <div className='flex items-center gap-3 p-3 rounded-lg bg-amber-400/10 border border-amber-400/30'>
+                  <LogIn className='w-5 h-5 text-amber-400 shrink-0' />
+                  <p className='text-xs text-amber-300'>
+                    <button onClick={() => setIsAuthModalOpen(true)} className='font-bold underline underline-offset-2'>Zaloguj się</button>, aby zapisać historię zamówień.
+                  </p>
+                </div>
+              )}
+
               {/* Order CTA */}
               <Button
                 onClick={handleOrder}
@@ -452,6 +493,8 @@ export default function CartPage() {
           </div>
         </div>
       </div>
+
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </main>
   )
 }
