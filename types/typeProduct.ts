@@ -7,6 +7,19 @@ export type Product = {
   quantity?: number
   category: string
   weight: string
-
 }
 
+export type Steak = {
+  id?: string
+  title: string
+  price: string
+  img: string
+  tag?: string
+  desc: string
+  weight: string
+  grade?: string
+  detail_images?: string[]
+  movie?: string
+  lineage?: string
+  marbling?: string
+}

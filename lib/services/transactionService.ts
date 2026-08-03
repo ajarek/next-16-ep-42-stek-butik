@@ -5,7 +5,6 @@ import {
   getDocs,
   query,
   where,
-  orderBy,
   Timestamp,
 } from "firebase/firestore";
 import type { Product } from "@/types/typeProduct";
@@ -70,18 +69,25 @@ export async function createTransaction(
 
 /**
  * Fetch all transactions for a specific user.
+ * Sorted client-side to avoid requiring a Firestore composite index
+ * (where userId + orderBy createdAt).
  */
 export async function getUserTransactions(userId: string): Promise<Transaction[]> {
   const q = query(
     collection(db, TRANSACTIONS_COLLECTION),
-    where("userId", "==", userId),
-    orderBy("createdAt", "desc")
+    where("userId", "==", userId)
   );
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({
+  const transactions = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   } as Transaction));
+
+  return transactions.sort((a, b) => {
+    const aTime = a.createdAt?.toMillis?.() ?? 0;
+    const bTime = b.createdAt?.toMillis?.() ?? 0;
+    return bTime - aTime;
+  });
 }
 
 /**

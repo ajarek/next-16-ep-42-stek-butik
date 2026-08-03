@@ -27,6 +27,7 @@ import {
 import { useCartStore } from "@/store/cartStore"
 import { useAuthStore } from "@/store/authStore"
 import AuthModal from "./AuthModal"
+import { isAdminEmail } from "@/lib/admin"
 
 const navLinks = [
   {
@@ -74,7 +75,7 @@ const Navbar = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
 
   const items = useCartStore((state) => state.items)
-  const { user, loading } = useAuthStore()
+  const { user } = useAuthStore()
 
   useEffect(() => {
     setMounted(true)
@@ -165,8 +166,19 @@ const Navbar = () => {
                 href="/profile"
                 className="flex items-center gap-2 hover:scale-105 transition-transform text-amber-400"
               >
-                <User className='w-5 h-5' />
-                <span className="text-xs font-bold">{user.email?.split('@')[0]}</span>
+                {user.photoURL ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={user.photoURL}
+                    alt={user.displayName || "Profil"}
+                    className="w-6 h-6 rounded-full border border-amber-400/50 object-cover"
+                  />
+                ) : (
+                  <User className='w-5 h-5' />
+                )}
+                <span className="text-xs font-bold">
+                  {user.displayName || user.email?.split('@')[0]}
+                </span>
               </Link>
             </div>
           ) : (
@@ -176,6 +188,17 @@ const Navbar = () => {
             >
               <User className='w-5 h-5' />
             </Button>
+          )}
+
+          {/* Admin Shortcut (desktop, admin only) */}
+          {isAdminEmail(user?.email) && (
+            <Link
+              href="/admin"
+              className="hidden md:flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-amber-400 border border-amber-500/40 rounded-lg px-3 py-2 hover:bg-amber-500/15 transition-colors"
+            >
+              <ShieldCheck className='w-4 h-4' />
+              Panel
+            </Link>
           )}
 
           {/* Mobile Hamburger Toggle Button */}
@@ -366,16 +389,37 @@ const Navbar = () => {
                     <Heart className='w-4 h-4 text-red-400' /> Ulubione
                   </Button>
                   <span className='text-slate-700'>•</span>
-                  <Button 
-                    onClick={() => {
-                      setIsOpen(false)
-                      setIsAuthModalOpen(true)
-                    }}
-                    className={`flex items-center gap-1 transition-colors ${user ? 'text-amber-400' : 'hover:text-white'}`}
-                  >
-                    <User className='w-4 h-4' /> {user ? 'Konto' : 'Logowanie'}
-                  </Button>
+                  {user ? (
+                    <Link
+                      href="/profile"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-1 text-amber-400 transition-colors"
+                    >
+                      <User className='w-4 h-4' /> Konto
+                    </Link>
+                  ) : (
+                    <Button 
+                      onClick={() => {
+                        setIsOpen(false)
+                        setIsAuthModalOpen(true)
+                      }}
+                      className="flex items-center gap-1 hover:text-white transition-colors"
+                    >
+                      <User className='w-4 h-4' /> Logowanie
+                    </Button>
+                  )}
                 </div>
+
+                {isAdminEmail(user?.email) && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full py-3 px-4 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-400 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-amber-500/25 transition-all"
+                  >
+                    <ShieldCheck className='w-4 h-4' />
+                    <span>Panel Admina</span>
+                  </Link>
+                )}
               </div>
             </motion.div>
           </>

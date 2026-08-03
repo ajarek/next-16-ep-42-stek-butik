@@ -5,36 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { getProducts } from "@/lib/services/productService";
-import { steaks } from "@/public/data/steaks";
 import type { Product } from "@/types/typeProduct";
 import { Flame, Loader2 } from "lucide-react";
 
-// Adapter: convert static steak data to Product shape for display
-const staticProducts: Product[] = steaks.map((s) => ({
-  id: String(s.id),
-  name: s.title,
-  image: s.img,
-  description: s.desc,
-  price: parseFloat(s.price),
-  category: s.tag,
-  weight: s.weight,
-}));
-
 export default function ProductsPage() {
-  const [products, setProducts] = useState<Product[]>(staticProducts);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getProducts()
-      .then((firestoreProducts) => {
-        // Use Firestore products if available, otherwise fall back to static
-        if (firestoreProducts.length > 0) {
-          setProducts(firestoreProducts);
-        }
-      })
-      .catch(() => {
-        // Silently fall back to static data on Firebase error (e.g. not configured)
-      })
+      .then(setProducts)
+      .catch(() => setProducts([]))
       .finally(() => setIsLoading(false));
   }, []);
 

@@ -1,10 +1,11 @@
 "use client"
-import { steaks } from "@/public/data/steaks"
 import { CirclePlay, ShieldCheck, Truck, ShoppingCart, Check } from "lucide-react"
 import Image from "next/image"
-import React, { use, useState } from "react"
+import React, { use, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/store/cartStore"
+import { getSteakById } from "@/lib/services/productService"
+import type { Steak } from "@/types/typeProduct"
 
 const ProductDetailsPage = ({
   params,
@@ -16,11 +17,33 @@ const ProductDetailsPage = ({
   const { id } = use(params)
   const addItemToCart = useCartStore((state) => state.addItemToCart)
 
-  const steak = steaks.find((s) => s.id === Number(id))
-  if (!steak) {
+  const [steak, setSteak] = useState<Steak | null>(null)
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    let ignore = false
+    getSteakById(id).then((found) => {
+      if (ignore) return
+      setSteak(found)
+      setLoaded(true)
+    })
+    return () => {
+      ignore = true
+    }
+  }, [id])
+
+  if (loaded && !steak) {
     return (
       <div className='min-h-screen flex flex-col justify-center items-center bg-chart-1 text-xl text-black'>
         Stek nie znaleziony
+      </div>
+    )
+  }
+
+  if (!steak) {
+    return (
+      <div className='min-h-screen flex flex-col justify-center items-center bg-chart-1 text-xl text-black'>
+        Ładowanie steka...
       </div>
     )
   }
@@ -32,7 +55,7 @@ const ProductDetailsPage = ({
     addItemToCart({
       id: `${steak.id}-${weightLabel}`,
       name: steak.title,
-      image: steak.img || steak.detail_images[0],
+      image: steak.img || steak.detail_images?.[0] || "/data/img/ribeye.jpg",
       description: steak.desc,
       price: calculatedPrice,
       quantity: 1,
@@ -53,7 +76,7 @@ const ProductDetailsPage = ({
           <Image
             className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'
             alt={steak.title}
-            src={steak.detail_images[0]}
+            src={steak.detail_images?.[0] ?? steak.img}
             fill
             priority
             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
@@ -73,7 +96,7 @@ const ProductDetailsPage = ({
             <Image
               className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
               alt={steak.title}
-              src={steak.detail_images[1]}
+              src={steak.detail_images?.[1] ?? steak.img}
               width={200}
               height={200}
             />
@@ -82,7 +105,7 @@ const ProductDetailsPage = ({
             <Image
               className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
               alt={steak.title}
-              src={steak.detail_images[2]}
+              src={steak.detail_images?.[2] ?? steak.img}
               width={200}
               height={200}
             />

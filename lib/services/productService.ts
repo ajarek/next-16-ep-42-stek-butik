@@ -5,95 +5,126 @@ import {
   doc,
   getDoc,
   addDoc,
-  query,
-  orderBy,
+  updateDoc,
+  deleteDoc,
   Timestamp,
 } from "firebase/firestore";
-import type { Product } from "@/types/typeProduct";
+import type { Product, Steak } from "@/types/typeProduct";
 
-const PRODUCTS_COLLECTION = "products";
+const STEAKS_COLLECTION = "steaks";
+
+function toProduct(data: Record<string, unknown>, id: string): Product {
+  return {
+    id,
+    name: (data.title ?? data.name ?? "Stek") as string,
+    image: (data.img ?? data.image ?? "/data/img/ribeye.jpg") as string,
+    description: (data.desc ?? data.description ?? "") as string,
+    price: Number(data.priceNumber ?? data.price ?? 0),
+    category: (data.tag ?? data.category ?? "STEAK") as string,
+    weight: (data.weight ?? "") as string,
+  };
+}
+
+function toSteak(data: Record<string, unknown>, id: string): Steak {
+  return {
+    id,
+    title: (data.title ?? data.name ?? "Stek") as string,
+    price: String(data.priceNumber ?? data.price ?? "0"),
+    img: (data.img ?? data.image ?? "") as string,
+    tag: (data.tag ?? data.category ?? "") as string,
+    desc: (data.desc ?? data.description ?? "") as string,
+    weight: (data.weight ?? "") as string,
+    grade: data.grade as string | undefined,
+    detail_images: data.detail_images as string[] | undefined,
+    movie: data.movie as string | undefined,
+    lineage: data.lineage as string | undefined,
+    marbling: data.marbling as string | undefined,
+  };
+}
 
 /**
- * Fetch all products from Firestore.
+ * Fetch all products from the "steaks" collection, mapped to the
+ * display shape used by the shop (product list, cart).
  */
 export async function getProducts(): Promise<Product[]> {
-  const q = query(collection(db, PRODUCTS_COLLECTION), orderBy("name"));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Product));
+  const snapshot = await getDocs(collection(db, STEAKS_COLLECTION));
+  const products = snapshot.docs.map((docSnap) =>
+    toProduct(docSnap.data() as Record<string, unknown>, docSnap.id)
+  );
+  return products.sort(
+    (a, b) => Number(a.id) - Number(b.id) || a.name.localeCompare(b.name)
+  );
 }
 
 /**
- * Fetch a single product by ID.
+ * Fetch all steaks from the "steaks" collection (full schema,
+ * used by the admin panel and product detail page).
  */
-export async function getProductById(id: string): Promise<Product | null> {
-  const docRef = doc(db, PRODUCTS_COLLECTION, id);
+export async function getSteaks(): Promise<Steak[]> {
+  const snapshot = await getDocs(collection(db, STEAKS_COLLECTION));
+  return snapshot.docs
+    .map((docSnap) =>
+      toSteak(docSnap.data() as Record<string, unknown>, docSnap.id)
+    )
+    .sort(
+      (a, b) => Number(a.id) - Number(b.id) || a.title.localeCompare(b.title)
+    );
+}
+
+/**
+ * Fetch a single steak by ID (full schema).
+ */
+export async function getSteakById(id: string): Promise<Steak | null> {
+  const docRef = doc(db, STEAKS_COLLECTION, id);
   const docSnap = await getDoc(docRef);
   if (!docSnap.exists()) return null;
-  return { id: docSnap.id, ...docSnap.data() } as Product;
+  return toSteak(docSnap.data() as Record<string, unknown>, docSnap.id);
 }
 
 /**
- * Add a new product (for admin/seeding use).
+ * Add a new product to the "steaks" collection.
  */
 export async function addProduct(
   product: Omit<Product, "id">
 ): Promise<string> {
-  const docRef = await addDoc(collection(db, PRODUCTS_COLLECTION), {
-    ...product,
+  const docRef = await addDoc(collection(db, STEAKS_COLLECTION), {
+    title: product.name,
+    price: String(product.price),
+    priceNumber: product.price,
+    img: product.image,
+    tag: product.category,
+    desc: product.description,
+    weight: product.weight,
     createdAt: Timestamp.now(),
   });
   return docRef.id;
 }
 
 /**
- * Seed the database with initial steak products.
- * Call this once from an admin page or script.
+ * Update an existing product in the "steaks" collection (admin only).
  */
-export async function seedProducts(): Promise<void> {
-  const steaks: Omit<Product, "id">[] = [
-    {
-      name: "Porterhouse T-Bone",
-      description:
-        "Majestatyczny stek łączący polędwicę i rostbef oddzielone kością-T. Intensywny smak, idealne marmurkowatość. Dry-aged 28 dni.",
-      price: 149.9,
-      image: "/data/img/porterhouse.jpg",
-      category: "PREMIUM CUT",
-      weight: "600g",
-    },
-    {
-      name: "Antrykot Ribeye",
-      description:
-        "Najbardziej marmurkowaty stek z żebra. Bogaty w tłuszcz śródmięśniowy, dający niesamowity smak po usmażeniu.",
-      price: 129.9,
-      image: "/data/img/ribeye.jpg",
-      category: "DRY AGED",
-      weight: "400g",
-    },
-    {
-      name: "Polędwica Wołowa",
-      description:
-        "Najdelikatniejsza część wołowiny. Niezrównana miękkość i subtelny smak. Idealna dla koneserów steka.",
-      price: 189.9,
-      image: "/data/img/filet.jpg",
-      category: "TENDERLOIN",
-      weight: "300g",
-    },
-    {
-      name: "Rostbef New York Strip",
-      description:
-        "Klasyczny stek z górnej części polędwicy. Mocny charakter mięsa, wyraźna skórka tłuszczowa i intensywny smak.",
-      price: 109.9,
-      image: "/data/img/rostbef.jpg",
-      category: "CLASSIC",
-      weight: "350g",
-    },
-  ];
+export async function updateProduct(
+  id: string,
+  product: Partial<Omit<Product, "id">>
+): Promise<void> {
+  const docRef = doc(db, STEAKS_COLLECTION, id);
+  await updateDoc(docRef, {
+    ...(product.name !== undefined && { title: product.name }),
+    ...(product.price !== undefined && {
+      price: String(product.price),
+      priceNumber: product.price,
+    }),
+    ...(product.image !== undefined && { img: product.image }),
+    ...(product.category !== undefined && { tag: product.category }),
+    ...(product.description !== undefined && { desc: product.description }),
+    ...(product.weight !== undefined && { weight: product.weight }),
+  });
+}
 
-  for (const steak of steaks) {
-    await addDoc(collection(db, PRODUCTS_COLLECTION), {
-      ...steak,
-      createdAt: Timestamp.now(),
-    });
-  }
-  console.log("✅ Seeded Firestore with steak products.");
+/**
+ * Delete a product from the "steaks" collection (admin only).
+ */
+export async function deleteProduct(id: string): Promise<void> {
+  const docRef = doc(db, STEAKS_COLLECTION, id);
+  await deleteDoc(docRef);
 }

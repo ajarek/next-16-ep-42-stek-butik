@@ -1,9 +1,22 @@
-import { steaks } from "@/public/data/steaks"
+"use client"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { getSteaks } from "@/lib/services/productService"
+import type { Steak } from "@/types/typeProduct"
 
 
 const BestSteaks = () => {
+  const [steaks, setSteaks] = useState<Steak[]>([])
+
+  useEffect(() => {
+    getSteaks()
+      .then(setSteaks)
+      .catch(() => setSteaks([]))
+  }, [])
+
+  const featured = steaks.slice(0, 4)
+
   return (
     <section className='container mx-auto p-8 space-y-12'>
       <div className='flex flex-col md:flex-row justify-between items-center '>
@@ -25,9 +38,9 @@ const BestSteaks = () => {
         </Link>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-        {steaks.slice(0, 4).map((item, idx) => (
+        {featured.map((item, idx) => (
           <Link
-            key={idx}
+            key={item.id ?? idx}
             href={`/products/${item.id}`}
             className=' group relative aspect-4/5 overflow-hidden block'
           >

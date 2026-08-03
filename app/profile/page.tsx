@@ -1,31 +1,64 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { getUserTransactions, Transaction, transactionStatusLabels, transactionStatusColors } from "@/lib/services/transactionService";
 import { motion } from "motion/react";
-import { User, Package, ShoppingBag, LogIn, Receipt, Clock, Truck, Store } from "lucide-react";
+import { User, Package, ShoppingBag, LogIn, Receipt, Clock, Truck, Store, LogOut } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import AuthModal from "@/components/AuthModal";
 
 export default function ProfilePage() {
+  const router = useRouter();
   const { user, loading } = useAuthStore();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     if (!user) {
       setIsLoading(false);
+      setFetchError(null);
       return;
     }
+
+    setIsLoading(true);
+    setFetchError(null);
+
     getUserTransactions(user.uid)
       .then(setTransactions)
-      .catch(console.error)
+      .catch((err) => {
+        console.error("Błąd pobierania transakcji:", err);
+        const code = err?.code as string | undefined;
+        if (code === "permission-denied") {
+          setFetchError(
+            "Brak uprawnień do odczytu zamówień. Sprawdź reguły Firestore w Firebase Console."
+          );
+        } else {
+          setFetchError("Nie udało się pobrać historii zamówień. Spróbuj ponownie później.");
+        }
+        setTransactions([]);
+      })
       .finally(() => setIsLoading(false));
   }, [user]);
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await signOut(auth);
+      router.push("/");
+    } catch (err) {
+      console.error("Błąd wylogowania:", err);
+      setIsLoggingOut(false);
+    }
+  };
 
   if (loading || isLoading) {
     return (
@@ -84,14 +117,38 @@ export default function ProfilePage() {
               Historię i szczegóły Twoich zamówień
             </p>
           </div>
-          <div className="flex items-center gap-4 px-4 py-3 bg-slate-900/80 border border-white/10 rounded-xl">
-            <div className="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
-              <User className="w-5 h-5 text-amber-400" />
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div className="flex items-center gap-4 px-4 py-3 bg-slate-900/80 border border-white/10 rounded-xl">
+              <div className="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center overflow-hidden shrink-0">
+                {user.photoURL ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={user.photoURL}
+                    alt={user.displayName || "Avatar"}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <User className="w-5 h-5 text-amber-400" />
+                )}
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Zalogowany jako</p>
+                {user.displayName && (
+                  <p className="text-sm font-bold text-white">{user.displayName}</p>
+                )}
+                <p className={`text-sm ${user.displayName ? "text-slate-400" : "font-bold text-white"}`}>
+                  {user.email}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-xs text-slate-400">Zalogowany jako</p>
-              <p className="text-sm font-bold text-white">{user.email}</p>
-            </div>
+            <Button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="flex items-center justify-center gap-2 px-4 py-3 h-auto rounded-xl bg-red-500/15 border border-red-500/30 text-red-400 hover:bg-red-500/25 hover:text-red-300 transition-colors font-semibold cursor-pointer disabled:opacity-60"
+            >
+              <LogOut className="w-4 h-4" />
+              {isLoggingOut ? "Wylogowywanie..." : "Wyloguj się"}
+            </Button>
           </div>
         </motion.div>
 
