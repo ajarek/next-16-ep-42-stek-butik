@@ -85,18 +85,27 @@ export async function getSteakById(id: string): Promise<Steak | null> {
  * Add a new product to the "steaks" collection.
  */
 export async function addProduct(
-  product: Omit<Product, "id">
+  product: Record<string, any>
 ): Promise<string> {
-  const docRef = await addDoc(collection(db, STEAKS_COLLECTION), {
+  // Build the document — only include optional fields when they have a value
+  const payload: Record<string, any> = {
     title: product.name,
     price: String(product.price),
     priceNumber: product.price,
     img: product.image,
-    tag: product.category,
     desc: product.description,
     weight: product.weight,
     createdAt: Timestamp.now(),
-  });
+  };
+
+  if (product.tag)           payload.tag           = product.tag;
+  if (product.grade)         payload.grade         = product.grade;
+  if (product.lineage)       payload.lineage       = product.lineage;
+  if (product.marbling)      payload.marbling      = product.marbling;
+  if (product.movie)         payload.movie         = product.movie;
+  if (product.detail_images) payload.detail_images = product.detail_images;
+
+  const docRef = await addDoc(collection(db, STEAKS_COLLECTION), payload);
   return docRef.id;
 }
 
@@ -105,20 +114,25 @@ export async function addProduct(
  */
 export async function updateProduct(
   id: string,
-  product: Partial<Omit<Product, "id">>
+  product: Record<string, any>
 ): Promise<void> {
   const docRef = doc(db, STEAKS_COLLECTION, id);
-  await updateDoc(docRef, {
-    ...(product.name !== undefined && { title: product.name }),
-    ...(product.price !== undefined && {
-      price: String(product.price),
-      priceNumber: product.price,
-    }),
-    ...(product.image !== undefined && { img: product.image }),
-    ...(product.category !== undefined && { tag: product.category }),
-    ...(product.description !== undefined && { desc: product.description }),
-    ...(product.weight !== undefined && { weight: product.weight }),
-  });
+
+  const payload: Record<string, any> = {};
+
+  if (product.name       !== undefined) { payload.title       = product.name; }
+  if (product.price      !== undefined) { payload.price       = String(product.price); payload.priceNumber = product.price; }
+  if (product.image      !== undefined) { payload.img         = product.image; }
+  if (product.description!== undefined) { payload.desc        = product.description; }
+  if (product.weight     !== undefined) { payload.weight      = product.weight; }
+  if (product.tag        !== undefined) { payload.tag         = product.tag; }
+  if (product.grade      !== undefined) { payload.grade       = product.grade; }
+  if (product.lineage    !== undefined) { payload.lineage     = product.lineage; }
+  if (product.marbling   !== undefined) { payload.marbling    = product.marbling; }
+  if (product.movie      !== undefined) { payload.movie       = product.movie; }
+  if (product.detail_images !== undefined) { payload.detail_images = product.detail_images; }
+
+  await updateDoc(docRef, payload);
 }
 
 /**

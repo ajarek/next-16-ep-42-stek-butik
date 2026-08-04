@@ -15,8 +15,8 @@ const Hero = () => {
           <div className='absolute inset-0 z-10 bg-black/30' />
           <Image
             fill
+            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             priority
-            sizes='100vw'
             className='object-cover object-center scale-105'
             src='https://lh3.googleusercontent.com/aida-public/AB6AXuDLrLrixbKd3u8CMjSfbUHyR5wXMhsTk1shNQCniiLTvZd7sXt62DqHhKHtXX4bhUV3GxSpIfeONDReBb9Jmi_774HNWZXTHCFyP654Zj13AblNYpu4-AFyKlCBOQqT5OX6yr9BrohIFUpLlq6YA4Grcp2IX5q9ARvpeQHrwNw2nHtkBqCp8osuGw8a_pNSHSlqMjtVbX7ycU4XPhl2k_cRC83cglaFE5h31G6X1eTMqQfqM2Otj6L84TUPkAe1LCo5w6-X7Wk5KOs-'
             alt='Premium dry-aged ribeye'

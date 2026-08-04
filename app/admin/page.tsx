@@ -6,12 +6,12 @@ import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { isAdminEmail } from "@/lib/admin";
 import {
-  getProducts,
+  getSteaks,
   addProduct,
   updateProduct,
   deleteProduct,
 } from "@/lib/services/productService";
-import type { Product } from "@/types/typeProduct";
+import type { Steak } from "@/types/typeProduct";
 import { Button } from "@/components/ui/button";
 import {
   Loader2,
@@ -28,13 +28,18 @@ const emptyForm = {
   image: "",
   description: "",
   price: "",
-  category: "",
   weight: "",
+  tag: "",
+  grade: "",
+  detail_images: "",
+  movie: "",
+  lineage: "",
+  marbling: "",
 };
 
 export default function AdminPage() {
   const { user } = useAuthStore();
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Steak[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
@@ -46,7 +51,7 @@ export default function AdminPage() {
 
   const loadProducts = () => {
     setIsLoading(true);
-    getProducts()
+    getSteaks()
       .then(setProducts)
       .catch(() => setProducts([]))
       .finally(() => setIsLoading(false));
@@ -96,15 +101,20 @@ export default function AdminPage() {
     );
   }
 
-  const handleEdit = (p: Product) => {
-    setEditingId(p.id);
+  const handleEdit = (p: Steak) => {
+    setEditingId(p.id!);
     setForm({
-      name: p.name,
-      image: p.image,
-      description: p.description,
-      price: String(p.price),
-      category: p.category,
+      name: p.title,
+      image: p.img,
+      description: p.desc,
+      price: p.price,
       weight: p.weight,
+      tag: p.tag ?? "",
+      grade: p.grade ?? "",
+      detail_images: (p.detail_images ?? []).join(", "),
+      movie: p.movie ?? "",
+      lineage: p.lineage ?? "",
+      marbling: p.marbling ?? "",
     });
     setError("");
     setSuccess("");
@@ -131,14 +141,20 @@ export default function AdminPage() {
       return;
     }
 
-    const data = {
+    const data: Record<string, any> = {
       name: form.name.trim(),
       image: form.image.trim(),
       description: form.description.trim(),
       price,
-      category: form.category.trim() || "CLASSIC",
       weight: form.weight.trim(),
     };
+    if (form.tag.trim()) data.tag = form.tag.trim();
+    if (form.grade.trim()) data.grade = form.grade.trim();
+    if (form.detail_images.trim())
+      data.detail_images = form.detail_images.split(",").map((s) => s.trim()).filter(Boolean);
+    if (form.movie.trim()) data.movie = form.movie.trim();
+    if (form.lineage.trim()) data.lineage = form.lineage.trim();
+    if (form.marbling.trim()) data.marbling = form.marbling.trim();
 
     try {
       if (editingId) {
@@ -248,16 +264,7 @@ export default function AdminPage() {
                 className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400"
               />
             </label>
-            <label className="block space-y-1">
-              <span className="text-xs font-semibold text-slate-400">Kategoria</span>
-              <input
-                type="text"
-                value={form.category}
-                onChange={(e) => setForm({ ...form, category: e.target.value })}
-                placeholder="np. PREMIUM CUT"
-                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400"
-              />
-            </label>
+
             <label className="block space-y-1">
               <span className="text-xs font-semibold text-slate-400">Waga</span>
               <input
@@ -285,6 +292,68 @@ export default function AdminPage() {
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                 rows={3}
                 className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400 resize-none"
+              />
+            </label>
+
+            {/* ─── Pola Steak ─── */}
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-slate-400">Tag (opcjonalny)</span>
+              <input
+                type="text"
+                value={form.tag}
+                onChange={(e) => setForm({ ...form, tag: e.target.value })}
+                placeholder="np. BESTSELLER"
+                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400"
+              />
+            </label>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-slate-400">Klasa / Grade (opcjonalny)</span>
+              <input
+                type="text"
+                value={form.grade}
+                onChange={(e) => setForm({ ...form, grade: e.target.value })}
+                placeholder="np. A5, Prime"
+                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400"
+              />
+            </label>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-slate-400">Pochodzenie / Lineage (opcjonalny)</span>
+              <input
+                type="text"
+                value={form.lineage}
+                onChange={(e) => setForm({ ...form, lineage: e.target.value })}
+                placeholder="np. Japonii, USA"
+                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400"
+              />
+            </label>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-slate-400">Marmurkowatość / Marbling (opcjonalny)</span>
+              <input
+                type="text"
+                value={form.marbling}
+                onChange={(e) => setForm({ ...form, marbling: e.target.value })}
+                placeholder="np. BMS 10"
+                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400"
+              />
+            </label>
+            <label className="block space-y-1 md:col-span-2">
+              <span className="text-xs font-semibold text-slate-400">Film (URL, opcjonalny)</span>
+              <input
+                type="text"
+                value={form.movie}
+                onChange={(e) => setForm({ ...form, movie: e.target.value })}
+                placeholder="np. /data/videos/ribeye.mp4"
+                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400"
+              />
+            </label>
+            <label className="block space-y-1 md:col-span-2">
+              <span className="text-xs font-semibold text-slate-400">Zdjęcia szczegółowe (URL-e oddzielone przecinkiem, opcjonalne)</span>
+              <input
+                type="text"
+                value={form.detail_images}
+                onChange={(e) => setForm({ ...form, detail_images: e.target.value })}
+                placeholder="/img/a.jpg, /img/b.jpg"
+                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400"
               />
             </label>
           </div>
@@ -315,15 +384,15 @@ export default function AdminPage() {
                 className="flex items-center gap-4 bg-slate-950/80 border border-white/10 rounded-xl p-3"
               >
                 <div className="relative w-16 h-16 overflow-hidden rounded-lg border border-white/10 shrink-0">
-                  <Image src={p.image} alt={p.name} fill className="object-cover" />
+                  <Image src={p.img} alt={p.title} fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-bold text-white truncate">{p.name}</p>
+                  <p className="font-bold text-white truncate">{p.title}</p>
                   <p className="text-xs text-slate-400">
-                    {p.category} • {p.weight}
+                    {p.tag ?? "—"} • {p.weight}
                   </p>
                   <p className="text-sm font-semibold text-amber-400">
-                    {p.price.toFixed(2)} PLN
+                    {parseFloat(p.price).toFixed(2)} PLN
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
