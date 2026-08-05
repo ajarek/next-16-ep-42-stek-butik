@@ -1,4 +1,4 @@
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebase"
 import {
   collection,
   getDocs,
@@ -8,10 +8,10 @@ import {
   updateDoc,
   deleteDoc,
   Timestamp,
-} from "firebase/firestore";
-import type { Product, Steak } from "@/types/typeProduct";
+} from "firebase/firestore"
+import type { Product, Steak, ProductInput } from "@/types/typeProduct"
 
-const STEAKS_COLLECTION = "steaks";
+const STEAKS_COLLECTION = "steaks"
 
 function toProduct(data: Record<string, unknown>, id: string): Product {
   return {
@@ -22,7 +22,7 @@ function toProduct(data: Record<string, unknown>, id: string): Product {
     price: Number(data.priceNumber ?? data.price ?? 0),
     category: (data.tag ?? data.category ?? "STEAK") as string,
     weight: (data.weight ?? "") as string,
-  };
+  }
 }
 
 function toSteak(data: Record<string, unknown>, id: string): Steak {
@@ -39,7 +39,7 @@ function toSteak(data: Record<string, unknown>, id: string): Steak {
     movie: data.movie as string | undefined,
     lineage: data.lineage as string | undefined,
     marbling: data.marbling as string | undefined,
-  };
+  }
 }
 
 /**
@@ -47,13 +47,13 @@ function toSteak(data: Record<string, unknown>, id: string): Steak {
  * display shape used by the shop (product list, cart).
  */
 export async function getProducts(): Promise<Product[]> {
-  const snapshot = await getDocs(collection(db, STEAKS_COLLECTION));
+  const snapshot = await getDocs(collection(db, STEAKS_COLLECTION))
   const products = snapshot.docs.map((docSnap) =>
-    toProduct(docSnap.data() as Record<string, unknown>, docSnap.id)
-  );
+    toProduct(docSnap.data() as Record<string, unknown>, docSnap.id),
+  )
   return products.sort(
-    (a, b) => Number(a.id) - Number(b.id) || a.name.localeCompare(b.name)
-  );
+    (a, b) => Number(a.id) - Number(b.id) || a.name.localeCompare(b.name),
+  )
 }
 
 /**
@@ -61,34 +61,32 @@ export async function getProducts(): Promise<Product[]> {
  * used by the admin panel and product detail page).
  */
 export async function getSteaks(): Promise<Steak[]> {
-  const snapshot = await getDocs(collection(db, STEAKS_COLLECTION));
+  const snapshot = await getDocs(collection(db, STEAKS_COLLECTION))
   return snapshot.docs
     .map((docSnap) =>
-      toSteak(docSnap.data() as Record<string, unknown>, docSnap.id)
+      toSteak(docSnap.data() as Record<string, unknown>, docSnap.id),
     )
     .sort(
-      (a, b) => Number(a.id) - Number(b.id) || a.title.localeCompare(b.title)
-    );
+      (a, b) => Number(a.id) - Number(b.id) || a.title.localeCompare(b.title),
+    )
 }
 
 /**
  * Fetch a single steak by ID (full schema).
  */
 export async function getSteakById(id: string): Promise<Steak | null> {
-  const docRef = doc(db, STEAKS_COLLECTION, id);
-  const docSnap = await getDoc(docRef);
-  if (!docSnap.exists()) return null;
-  return toSteak(docSnap.data() as Record<string, unknown>, docSnap.id);
+  const docRef = doc(db, STEAKS_COLLECTION, id)
+  const docSnap = await getDoc(docRef)
+  if (!docSnap.exists()) return null
+  return toSteak(docSnap.data() as Record<string, unknown>, docSnap.id)
 }
 
 /**
  * Add a new product to the "steaks" collection.
  */
-export async function addProduct(
-  product: Record<string, any>
-): Promise<string> {
+export async function addProduct(product: ProductInput): Promise<string> {
   // Build the document — only include optional fields when they have a value
-  const payload: Record<string, any> = {
+  const payload: Record<string, unknown> = {
     title: product.name,
     price: String(product.price),
     priceNumber: product.price,
@@ -96,17 +94,17 @@ export async function addProduct(
     desc: product.description,
     weight: product.weight,
     createdAt: Timestamp.now(),
-  };
+  }
 
-  if (product.tag)           payload.tag           = product.tag;
-  if (product.grade)         payload.grade         = product.grade;
-  if (product.lineage)       payload.lineage       = product.lineage;
-  if (product.marbling)      payload.marbling      = product.marbling;
-  if (product.movie)         payload.movie         = product.movie;
-  if (product.detail_images) payload.detail_images = product.detail_images;
+  if (product.tag) payload.tag = product.tag
+  if (product.grade) payload.grade = product.grade
+  if (product.lineage) payload.lineage = product.lineage
+  if (product.marbling) payload.marbling = product.marbling
+  if (product.movie) payload.movie = product.movie
+  if (product.detail_images) payload.detail_images = product.detail_images
 
-  const docRef = await addDoc(collection(db, STEAKS_COLLECTION), payload);
-  return docRef.id;
+  const docRef = await addDoc(collection(db, STEAKS_COLLECTION), payload)
+  return docRef.id
 }
 
 /**
@@ -114,31 +112,54 @@ export async function addProduct(
  */
 export async function updateProduct(
   id: string,
-  product: Record<string, any>
+  product: Partial<ProductInput>,
 ): Promise<void> {
-  const docRef = doc(db, STEAKS_COLLECTION, id);
+  const docRef = doc(db, STEAKS_COLLECTION, id)
 
-  const payload: Record<string, any> = {};
+  const payload: Record<string, unknown> = {}
 
-  if (product.name       !== undefined) { payload.title       = product.name; }
-  if (product.price      !== undefined) { payload.price       = String(product.price); payload.priceNumber = product.price; }
-  if (product.image      !== undefined) { payload.img         = product.image; }
-  if (product.description!== undefined) { payload.desc        = product.description; }
-  if (product.weight     !== undefined) { payload.weight      = product.weight; }
-  if (product.tag        !== undefined) { payload.tag         = product.tag; }
-  if (product.grade      !== undefined) { payload.grade       = product.grade; }
-  if (product.lineage    !== undefined) { payload.lineage     = product.lineage; }
-  if (product.marbling   !== undefined) { payload.marbling    = product.marbling; }
-  if (product.movie      !== undefined) { payload.movie       = product.movie; }
-  if (product.detail_images !== undefined) { payload.detail_images = product.detail_images; }
+  if (product.name !== undefined) {
+    payload.title = product.name
+  }
+  if (product.price !== undefined) {
+    payload.price = String(product.price)
+    payload.priceNumber = product.price
+  }
+  if (product.image !== undefined) {
+    payload.img = product.image
+  }
+  if (product.description !== undefined) {
+    payload.desc = product.description
+  }
+  if (product.weight !== undefined) {
+    payload.weight = product.weight
+  }
+  if (product.tag !== undefined) {
+    payload.tag = product.tag
+  }
+  if (product.grade !== undefined) {
+    payload.grade = product.grade
+  }
+  if (product.lineage !== undefined) {
+    payload.lineage = product.lineage
+  }
+  if (product.marbling !== undefined) {
+    payload.marbling = product.marbling
+  }
+  if (product.movie !== undefined) {
+    payload.movie = product.movie
+  }
+  if (product.detail_images !== undefined) {
+    payload.detail_images = product.detail_images
+  }
 
-  await updateDoc(docRef, payload);
+  await updateDoc(docRef, payload)
 }
 
 /**
  * Delete a product from the "steaks" collection (admin only).
  */
 export async function deleteProduct(id: string): Promise<void> {
-  const docRef = doc(db, STEAKS_COLLECTION, id);
-  await deleteDoc(docRef);
+  const docRef = doc(db, STEAKS_COLLECTION, id)
+  await deleteDoc(docRef)
 }

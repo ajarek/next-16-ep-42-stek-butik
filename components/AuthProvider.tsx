@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import { useAuthStore } from "@/store/authStore";
+import { useEffect } from "react"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "@/lib/firebase"
+import { useAuthStore } from "@/store/authStore"
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { setUser, setLoading } = useAuthStore();
+  const { setUser, setLoading } = useAuthStore()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
+      setUser(user)
+      setLoading(false)
+    })
 
-    return () => unsubscribe();
-  }, [setUser, setLoading]);
+    return () => unsubscribe()
+  }, [setUser, setLoading])
 
-  return <>{children}</>;
+  return <>{children}</>
 }

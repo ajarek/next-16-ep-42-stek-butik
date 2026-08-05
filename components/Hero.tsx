@@ -3,11 +3,8 @@
 import { Glass } from "@/components/canvasui/Glass"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 const Hero = () => {
-  const router = useRouter()
-
   return (
     <Glass>
       <section className='relative flex min-h-screen w-full items-center overflow-hidden'>

@@ -23,3 +23,17 @@ export type Steak = {
   lineage?: string
   marbling?: string
 }
+
+export type ProductInput = {
+  name: string
+  price: number
+  image: string
+  description: string
+  weight: string
+  tag?: string
+  grade?: string
+  lineage?: string
+  marbling?: string
+  movie?: string
+  detail_images?: string[]
+}

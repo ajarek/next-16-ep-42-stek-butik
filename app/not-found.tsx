@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className='flex flex-col items-center justify-center flex-grow min-h-[60vh] gap-6 px-4 py-16'>
+    <div className='flex flex-col items-center justify-center grow min-h-[60vh] gap-6 px-4 py-16'>
       <div className='flex flex-col items-center gap-2 text-center'>
         <div className='relative text-2xl group-hover:scale-110 transition-transform duration-300'>
           <CircleOff className='w-24 h-24 text-red-500' />

@@ -5,7 +5,6 @@ import Link from "next/link"
 import { getSteaks } from "@/lib/services/productService"
 import type { Steak } from "@/types/typeProduct"
 
-
 const BestSteaks = () => {
   const [steaks, setSteaks] = useState<Steak[]>([])
 

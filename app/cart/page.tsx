@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { useHasMounted } from "@/hooks/useHasMounted"
 import {
   Trash2,
   Plus,
@@ -28,7 +29,7 @@ import { createTransaction } from "@/lib/services/transactionService"
 import AuthModal from "@/components/AuthModal"
 
 export default function CartPage() {
-  const [mounted, setMounted] = useState(false)
+  const mounted = useHasMounted()
   const [deliveryMethod, setDeliveryMethod] = useState<"courier" | "pickup">(
     "courier"
   )
@@ -43,10 +44,6 @@ export default function CartPage() {
   const { items, increment, decrement, removeItemFromCart, removeAllFromCart } =
     useCartStore()
   const { user } = useAuthStore()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   if (!mounted) {
     return (

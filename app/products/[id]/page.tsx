@@ -1,5 +1,5 @@
 "use client"
-import { CirclePlay, ShieldCheck, Truck, ShoppingCart, Check } from "lucide-react"
+import { ShieldCheck, Truck, ShoppingCart, Check } from "lucide-react"
 import Image from "next/image"
 import React, { use, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"

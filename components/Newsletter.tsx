@@ -8,15 +8,18 @@ const Newsletter = () => {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // Tutaj możesz dodać logikę formularza
-   toast.promise(
+    toast.promise(
       new Promise<{ name: string }>((resolve) => {
-        window.setTimeout(() => resolve({ name: "Dziękujemy za zapis do newslettera!" }), 2000)
+        window.setTimeout(
+          () => resolve({ name: "Dziękujemy za zapis do newslettera!" }),
+          2000,
+        )
       }),
       {
         loading: "Zapisywanie...",
         success: (data) => `${data.name}`,
         error: "Nie udało się zapisać do newslettera.",
-      }
+      },
     )
     e.currentTarget.reset()
   }
@@ -42,7 +45,10 @@ const Newsletter = () => {
             type='email'
             required
           />
-          <Button className='h-14 px-8 rounded-none bg-primary uppercase tracking-widest hover:brightness-110 transition-all cursor-pointer' type='submit'>
+          <Button
+            className='h-14 px-8 rounded-none bg-primary uppercase tracking-widest hover:brightness-110 transition-all cursor-pointer'
+            type='submit'
+          >
             Dołącz
           </Button>
         </form>

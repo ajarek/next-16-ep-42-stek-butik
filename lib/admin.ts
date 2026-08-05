@@ -1,6 +1,12 @@
-export const ADMIN_EMAILS = ["ajarek@poczta.onet.pl", "ajarek2101@gmail.com"];
+function getAdminEmails(): string[] {
+  const raw = process.env.NEXT_PUBLIC_ADMIN_EMAILS ?? "";
+  return raw
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+}
 
 export function isAdminEmail(email: string | null | undefined): boolean {
   if (!email) return false;
-  return ADMIN_EMAILS.includes(email.toLowerCase().trim());
+  return getAdminEmails().includes(email.toLowerCase().trim());
 }
