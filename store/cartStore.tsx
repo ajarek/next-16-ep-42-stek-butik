@@ -1,6 +1,6 @@
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
-import type { Product } from '@/types/typeProduct'
+import { create } from "zustand"
+import { persist, createJSONStorage } from "zustand/middleware"
+import type { Product } from "@/types/typeProduct"
 
 type CartState = {
   items: Product[]

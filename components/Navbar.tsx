@@ -8,9 +8,7 @@ import { Button } from "./ui/button"
 import {
   Menu,
   X,
-  Search,
   ShoppingCart,
-  Heart,
   User,
   Flame,
   ChevronRight,
@@ -71,7 +69,6 @@ const navLinks = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
   const mounted = useHasMounted()
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
 
@@ -135,17 +132,6 @@ const Navbar = () => {
 
         {/* Desktop & Mobile Actions */}
         <div className='flex items-center gap-4 md:gap-6'>
-          {/* Desktop Search Icon */}
-          <Button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
-            <Search className='w-5 h-5' />
-          </Button>
-
-          {/* Desktop Favorites */}
-          <Button className='hidden md:block text-primary-foreground hover:scale-110 transition-transform'>
-            <Heart className='w-5 h-5' />
-          </Button>
-
-          {/* Shopping Cart Shortcut */}
           <Link
             href='/cart'
             className='relative hover:scale-105 transition-transform'
@@ -269,16 +255,6 @@ const Navbar = () => {
               {/* Drawer Body - Scrollable */}
               <div className='flex-1 overflow-y-auto px-4 py-5 space-y-6 custom-scrollbar'>
                 {/* Search Bar inside Drawer */}
-                <div className='relative'>
-                  <Search className='absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400' />
-                  <input
-                    type='text'
-                    placeholder='Szukaj steka, wycięcia, wagyu...'
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className='w-full pl-10 pr-4 py-2.5 bg-slate-900/90 border border-white/10 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 transition-all'
-                  />
-                </div>
 
                 {/* Main Navigation Category List */}
                 <div className='space-y-1'>
@@ -384,9 +360,6 @@ const Navbar = () => {
                 </Link>
 
                 <div className='flex items-center justify-around text-slate-400 text-xs pt-1'>
-                  <Button className='flex items-center gap-1 hover:text-white transition-colors'>
-                    <Heart className='w-4 h-4 text-red-400' /> Ulubione
-                  </Button>
                   <span className='text-slate-700'>•</span>
                   {user ? (
                     <Link
