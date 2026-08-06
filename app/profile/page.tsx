@@ -34,7 +34,6 @@ export default function ProfilePage() {
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [fetchedUid, setFetchedUid] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [fetchError, setFetchError] = useState<string | null>(null)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
@@ -48,22 +47,11 @@ export default function ProfilePage() {
     getUserTransactions(user.uid)
       .then((data) => {
         if (ignore) return
-        setFetchError(null)
         setTransactions(data)
       })
       .catch((err) => {
         if (ignore) return
         console.error("Błąd pobierania transakcji:", err)
-        const code = err?.code as string | undefined
-        if (code === "permission-denied") {
-          setFetchError(
-            "Brak uprawnień do odczytu zamówień. Sprawdź reguły Firestore w Firebase Console.",
-          )
-        } else {
-          setFetchError(
-            "Nie udało się pobrać historii zamówień. Spróbuj ponownie później.",
-          )
-        }
         setTransactions([])
       })
       .finally(() => {

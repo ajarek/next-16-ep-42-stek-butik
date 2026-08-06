@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "motion/react"
@@ -77,17 +77,15 @@ export default function AdminPage() {
 
   const isAdmin = isAdminEmail(user?.email)
 
-  const loadProducts = () => {
-    setIsLoadingProducts(true)
-    getSteaks()
+  const fetchProducts = useCallback(() => {
+    return getSteaks()
       .then(setProducts)
       .catch(() => setProducts([]))
       .finally(() => setIsLoadingProducts(false))
-  }
+  }, [])
 
-  const loadTransactions = () => {
-    setIsLoadingTransactions(true)
-    getAllTransactions()
+  const fetchTransactions = useCallback(() => {
+    return getAllTransactions()
       .then(setTransactions)
       .catch((err) => {
         console.error(err)
@@ -95,20 +93,30 @@ export default function AdminPage() {
         const code = err?.code as string | undefined
         if (code === "permission-denied") {
           setError(
-            "Brak uprawnień w Firestore do odczytu kolekcji zamówień (permission-denied). Sprawdź czy jesteś zalogowany na właściwy adres e-mail administratora.",
+            "Brak uprawnie\u0144 w Firestore do odczytu kolekcji zam\u00f3wie\u0144 (permission-denied). Sprawd\u017a czy jeste\u015b zalogowany na w\u0142a\u015bciwy adres e-mail administratora.",
           )
         } else {
-          setError("Błąd podczas pobierania transakcji z Firestore.")
+          setError("B\u0142\u0105d podczas pobierania transakcji z Firestore.")
         }
       })
       .finally(() => setIsLoadingTransactions(false))
+  }, [])
+
+  const loadProducts = () => {
+    setIsLoadingProducts(true)
+    void fetchProducts()
+  }
+
+  const loadTransactions = () => {
+    setIsLoadingTransactions(true)
+    void fetchTransactions()
   }
 
   useEffect(() => {
     if (!isAdmin) return
-    loadProducts()
-    loadTransactions()
-  }, [isAdmin])
+    void fetchProducts()
+    void fetchTransactions()
+  }, [fetchProducts, fetchTransactions, isAdmin])
 
   if (!user) {
     return (
