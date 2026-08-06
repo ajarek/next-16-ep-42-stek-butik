@@ -40,6 +40,10 @@ export default function CartPage() {
   const [orderCompleted, setOrderCompleted] = useState(false)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [orderId, setOrderId] = useState<string | null>(null)
+  const [formError, setFormError] = useState("")
+
+  const [cardData, setCardData] = useState({ number: "", expiry: "", cvc: "", name: "" })
+  const [transferData, setTransferData] = useState({ name: "", account: "" })
 
   const { items, increment, decrement, removeItemFromCart, removeAllFromCart } =
     useCartStore()
@@ -70,6 +74,20 @@ export default function CartPage() {
       setIsAuthModalOpen(true)
       return
     }
+
+    setFormError("")
+    if (paymentMethod === "card") {
+      if (!cardData.number || !cardData.expiry || !cardData.cvc || !cardData.name) {
+        setFormError("Proszę wypełnić wszystkie pola dla płatności Kartą / BLIK.")
+        return
+      }
+    } else if (paymentMethod === "transfer") {
+      if (!transferData.name || !transferData.account) {
+        setFormError("Proszę wypełnić wszystkie pola dla płatności przelewem.")
+        return
+      }
+    }
+
     setIsOrdering(true)
     try {
       const id = await createTransaction(
@@ -371,7 +389,40 @@ export default function CartPage() {
                 </button>
               </div>
 
-              <p className='text-xs text-slate-400 font-light italic pt-1'>
+              {paymentMethod === "card" && (
+                <div className='mt-4 p-5 border border-white/10 bg-slate-900/40 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300'>
+                  <div className='text-sm font-bold uppercase tracking-wider text-background flex items-center gap-2'>
+                    <CreditCard className='w-4 h-4 text-chart-1' />
+                    Dane Karty Kredytowej / BLIK
+                  </div>
+                  <div className='space-y-3'>
+                    <input type='text' value={cardData.number} onChange={(e) => setCardData({...cardData, number: e.target.value})} placeholder='Numer Karty (16 cyfr) lub Kod BLIK (6 cyfr)' className='w-full bg-slate-950 border border-white/10 p-3 text-sm text-background focus:outline-none focus:border-primary transition-colors placeholder:text-slate-600' />
+                    <div className='grid grid-cols-2 gap-3'>
+                      <input type='text' value={cardData.expiry} onChange={(e) => setCardData({...cardData, expiry: e.target.value})} placeholder='Ważność (MM/YY)' className='w-full bg-slate-950 border border-white/10 p-3 text-sm text-background focus:outline-none focus:border-primary transition-colors placeholder:text-slate-600' />
+                      <input type='text' value={cardData.cvc} onChange={(e) => setCardData({...cardData, cvc: e.target.value})} placeholder='CVC' className='w-full bg-slate-950 border border-white/10 p-3 text-sm text-background focus:outline-none focus:border-primary transition-colors placeholder:text-slate-600' />
+                    </div>
+                    <input type='text' value={cardData.name} onChange={(e) => setCardData({...cardData, name: e.target.value})} placeholder='Imię i nazwisko posiadacza' className='w-full bg-slate-950 border border-white/10 p-3 text-sm text-background focus:outline-none focus:border-primary transition-colors placeholder:text-slate-600' />
+                  </div>
+                </div>
+              )}
+
+              {paymentMethod === "transfer" && (
+                <div className='mt-4 p-5 border border-white/10 bg-slate-900/40 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300'>
+                  <div className='text-sm font-bold uppercase tracking-wider text-background flex items-center gap-2'>
+                    <Landmark className='w-4 h-4 text-chart-1' />
+                    Dane Nadawcy Przelewu
+                  </div>
+                  <p className='text-xs text-slate-400 font-light leading-relaxed'>
+                    Wprowadź dane rachunku, z którego wykonasz przelew, co przyspieszy proces księgowania Twojej wpłaty po złożeniu zamówienia.
+                  </p>
+                  <div className='space-y-3'>
+                    <input type='text' value={transferData.name} onChange={(e) => setTransferData({...transferData, name: e.target.value})} placeholder='Imię i nazwisko / Nazwa nadawcy' className='w-full bg-slate-950 border border-white/10 p-3 text-sm text-background focus:outline-none focus:border-primary transition-colors placeholder:text-slate-600' />
+                    <input type='text' value={transferData.account} onChange={(e) => setTransferData({...transferData, account: e.target.value})} placeholder='Numer konta (IBAN)' className='w-full bg-slate-950 border border-white/10 p-3 text-sm text-background focus:outline-none focus:border-primary transition-colors placeholder:text-slate-600' />
+                  </div>
+                </div>
+              )}
+
+              <p className='text-xs text-slate-400 font-light italic pt-4'>
                 Wszystkie transakcje są szyfrowane i bezpieczne. Wspieramy szybkie płatności rzemieślnicze.
               </p>
             </div>
@@ -433,6 +484,12 @@ export default function CartPage() {
                   <p className='text-xs text-amber-300'>
                     <button onClick={() => setIsAuthModalOpen(true)} className='font-bold underline underline-offset-2'>Zaloguj się</button>, aby zapisać historię zamówień.
                   </p>
+                </div>
+              )}
+
+              {formError && (
+                <div className='p-3 border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-semibold rounded-none animate-in fade-in'>
+                  {formError}
                 </div>
               )}
 
