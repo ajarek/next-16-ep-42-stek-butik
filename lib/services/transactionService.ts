@@ -39,10 +39,6 @@ export interface Transaction {
 }
 
 const TRANSACTIONS_COLLECTION = "transactions"
-
-/**
- * Create a new transaction in Firestore.
- */
 export async function createTransaction(
   userId: string,
   userEmail: string,
@@ -76,12 +72,6 @@ export async function createTransaction(
   )
   return docRef.id
 }
-
-/**
- * Fetch all transactions for a specific user.
- * Sorted client-side to avoid requiring a Firestore composite index
- * (where userId + orderBy createdAt).
- */
 export async function getUserTransactions(
   userId: string,
 ): Promise<Transaction[]> {
@@ -104,10 +94,6 @@ export async function getUserTransactions(
     return bTime - aTime
   })
 }
-
-/**
- * Fetch all transactions for admin panel.
- */
 export async function getAllTransactions(): Promise<Transaction[]> {
   const snapshot = await getDocs(collection(db, TRANSACTIONS_COLLECTION))
   const transactions = snapshot.docs.map(
@@ -124,10 +110,6 @@ export async function getAllTransactions(): Promise<Transaction[]> {
     return bTime - aTime
   })
 }
-
-/**
- * Update status of a specific transaction in Firestore.
- */
 export async function updateTransactionStatus(
   transactionId: string,
   newStatus: TransactionStatus,
@@ -135,10 +117,6 @@ export async function updateTransactionStatus(
   const docRef = doc(db, TRANSACTIONS_COLLECTION, transactionId)
   await updateDoc(docRef, { status: newStatus })
 }
-
-/**
- * Human-readable status labels (Polish).
- */
 export const transactionStatusLabels: Record<TransactionStatus, string> = {
   pending: "Oczekuje na potwierdzenie",
   confirmed: "Potwierdzone",

@@ -134,7 +134,6 @@ export default function ProfilePage() {
   return (
     <main className='min-h-screen bg-foreground text-background pt-28 pb-20 px-4 md:px-8 lg:px-16'>
       <div className='max-w-5xl mx-auto space-y-10'>
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -186,8 +185,6 @@ export default function ProfilePage() {
             </Button>
           </div>
         </motion.div>
-
-        {/* Stats */}
         <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           {[
             {
@@ -230,8 +227,6 @@ export default function ProfilePage() {
             </motion.div>
           ))}
         </div>
-
-        {/* Transactions */}
         <div className='space-y-4'>
           <h2 className='text-2xl font-bold uppercase tracking-wide'>
             Historia Zamówień
@@ -263,7 +258,6 @@ export default function ProfilePage() {
                   transition={{ delay: i * 0.07 }}
                   className='bg-slate-950/80 border border-white/10 rounded-xl p-5 md:p-6 space-y-4 hover:border-white/20 transition-colors'
                 >
-                  {/* Top row */}
                   <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-3'>
                     <div className='space-y-1'>
                       <p className='text-xs text-slate-500 font-mono'>
@@ -288,8 +282,6 @@ export default function ProfilePage() {
                       </span>
                     </div>
                   </div>
-
-                  {/* Items */}
                   <div className='flex flex-wrap gap-3'>
                     {txn.items.map((item, j) => (
                       <div
@@ -319,8 +311,6 @@ export default function ProfilePage() {
                       </div>
                     ))}
                   </div>
-
-                  {/* Footer */}
                   <div className='flex items-center gap-4 text-xs text-slate-500 border-t border-white/5 pt-3'>
                     {txn.deliveryMethod === "courier" ? (
                       <span className='flex items-center gap-1'>

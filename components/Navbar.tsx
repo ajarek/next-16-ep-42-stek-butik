@@ -78,8 +78,6 @@ const Navbar = () => {
   const cartCount = mounted
     ? items.reduce((acc, item) => acc + (item.quantity ?? 1), 0)
     : 0
-
-  // Lock body scroll when mobile menu is active
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden"
@@ -94,7 +92,6 @@ const Navbar = () => {
   return (
     <>
       <nav className='h-16 fixed top-0 left-0 w-full z-50 flex justify-between items-center bg-primary/95 backdrop-blur-md px-4 shadow-lg border-b border-white/10'>
-        {/* Brand Logo */}
         <Link
           href='/'
           className='flex items-center gap-2 text-lg md:text-3xl font-bold text-primary-foreground uppercase tracking-tighter hover:opacity-90 transition-opacity'
@@ -103,8 +100,6 @@ const Navbar = () => {
           <Flame className='w-6 h-6 text-amber-300 animate-pulse' />
           <span>POLSKA WOŁOWINA</span>
         </Link>
-
-        {/* Desktop Links */}
         <div className='hidden md:flex items-center gap-8'>
           {navLinks.map((link, idx) => {
             return (
@@ -129,8 +124,6 @@ const Navbar = () => {
             )
           })}
         </div>
-
-        {/* Desktop & Mobile Actions */}
         <div className='flex items-center gap-4 md:gap-6'>
           <Link
             href='/cart'
@@ -141,8 +134,6 @@ const Navbar = () => {
               {cartCount}
             </span>
           </Link>
-
-          {/* User Icon (Desktop) */}
           {user ? (
             <div className='hidden md:flex items-center gap-2'>
               <Link
@@ -172,8 +163,6 @@ const Navbar = () => {
               <User className='w-5 h-5' />
             </Button>
           )}
-
-          {/* Admin Shortcut (desktop, admin only) */}
           {isAdminEmail(user?.email) && (
             <Link
               href='/admin'
@@ -183,8 +172,6 @@ const Navbar = () => {
               Panel
             </Link>
           )}
-
-          {/* Mobile Hamburger Toggle Button */}
           <Button
             onClick={() => setIsOpen(!isOpen)}
             aria-label='Toggle Mobile Menu'
@@ -203,12 +190,9 @@ const Navbar = () => {
           </Button>
         </div>
       </nav>
-
-      {/* App-Style Slide-Out Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop Overlay with Blur */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -217,8 +201,6 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
               className='fixed inset-0 z-50 bg-black/70 backdrop-blur-sm md:hidden'
             />
-
-            {/* Mobile Drawer Container */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -226,7 +208,6 @@ const Navbar = () => {
               transition={{ type: "spring", damping: 26, stiffness: 220 }}
               className='fixed right-0 top-0 bottom-0 z-50 w-[88vw] max-w-sm h-full bg-slate-950 text-slate-100 flex flex-col shadow-2xl border-l border-white/10 md:hidden overflow-hidden'
             >
-              {/* Drawer App Top Header */}
               <div className='p-5 bg-linear-to-r from-neutral-900 to-slate-900 border-b border-white/10 flex items-center justify-between'>
                 <div className='flex items-center gap-3'>
                   <div className='w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary-foreground font-bold'>
@@ -251,12 +232,7 @@ const Navbar = () => {
                   <X className='w-5 h-5' />
                 </Button>
               </div>
-
-              {/* Drawer Body - Scrollable */}
               <div className='flex-1 overflow-y-auto px-4 py-5 space-y-6 custom-scrollbar'>
-                {/* Search Bar inside Drawer */}
-
-                {/* Main Navigation Category List */}
                 <div className='space-y-1'>
                   <div className='text-[10px] font-bold uppercase tracking-widest text-slate-400 px-3 mb-2'>
                     Kategorie Steków
@@ -299,8 +275,6 @@ const Navbar = () => {
                     )
                   })}
                 </div>
-
-                {/* App Quick Stats & Favorites Card */}
                 <div className='p-4 rounded-2xl bg-linear-to-br from-red-950/40 to-amber-950/20 border border-red-500/20 space-y-3'>
                   <div className='flex items-center justify-between text-xs font-bold text-amber-300'>
                     <span className='flex items-center gap-1.5'>
@@ -325,8 +299,6 @@ const Navbar = () => {
                     </span>
                   </div>
                 </div>
-
-                {/* Direct Hotline Contact Banner */}
                 <a
                   href='tel:+48123456789'
                   className='flex items-center justify-between p-3.5 rounded-xl bg-slate-900 border border-white/10 hover:border-amber-400/50 transition-colors group'
@@ -347,8 +319,6 @@ const Navbar = () => {
                   <ArrowRight className='w-4 h-4 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all' />
                 </a>
               </div>
-
-              {/* Drawer Bottom Mobile Quick Actions */}
               <div className='p-4 bg-slate-900 border-t border-white/10 space-y-3'>
                 <Link
                   href='/cart'

@@ -171,7 +171,6 @@ export default function CartPage() {
   return (
     <main className='min-h-screen bg-foreground text-background pt-28 pb-20 px-4 md:px-8 lg:px-16'>
       <div className='max-w-7xl mx-auto space-y-8'>
-        {/* Header */}
         <div className='space-y-2 border-b border-white/10 pb-6'>
           <h1 className='text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-background'>
             Twój Koszyk
@@ -180,12 +179,8 @@ export default function CartPage() {
             Przejrzyj wybrane cięcia przed finalizacją zamówienia.
           </p>
         </div>
-
-        {/* Content Layout */}
         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-start'>
-          {/* Left Column - Cart Items & Options */}
           <div className='lg:col-span-7 space-y-10'>
-            {/* Cart Items List */}
             <div className='space-y-4'>
               {items.map((item) => {
                 const quantity = item.quantity ?? 1
@@ -195,7 +190,6 @@ export default function CartPage() {
                     className='bg-slate-950/80 border border-white/10 p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors hover:border-white/20'
                   >
                     <div className='flex items-center gap-4 w-full sm:w-auto'>
-                      {/* Product Thumbnail */}
                       <div className='relative w-20 h-20 md:w-24 md:h-24 shrink-0 overflow-hidden border border-white/20 bg-neutral-900'>
                         <Image
                           src={item.image || "/data/placeholder.jpg"}
@@ -205,8 +199,6 @@ export default function CartPage() {
                           className='object-cover'
                         />
                       </div>
-
-                      {/* Info */}
                       <div className='space-y-1 flex-1'>
                         <span className='text-[10px] md:text-xs font-semibold uppercase tracking-widest text-chart-1 block'>
                           {item.category || "PREMIUM CUT"}
@@ -217,8 +209,6 @@ export default function CartPage() {
                         <p className='text-xs text-slate-400 font-light'>
                           Waga: ~{item.weight || "300g"} | Pochodzenie: Podlasie
                         </p>
-
-                        {/* Quantity Counter Mobile/Desktop */}
                         <div className='flex items-center gap-2 pt-2'>
                           <div className='flex items-center border border-white/20 bg-slate-900'>
                             <button
@@ -242,8 +232,6 @@ export default function CartPage() {
                         </div>
                       </div>
                     </div>
-
-                    {/* Price & Remove Button */}
                     <div className='flex sm:flex-col justify-between items-end w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10'>
                       <div className='text-right'>
                         <span className='text-xl font-bold text-chart-1 tracking-tight block'>
@@ -262,14 +250,11 @@ export default function CartPage() {
                 )
               })}
             </div>
-
-            {/* Metoda Dostawy Section */}
             <div className='space-y-4 pt-2'>
               <h2 className='text-2xl font-bold uppercase tracking-wide text-background'>
                 Metoda Dostawy
               </h2>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                {/* Courier Option */}
                 <div
                   onClick={() => setDeliveryMethod("courier")}
                   className={`p-4 border cursor-pointer transition-all flex items-center justify-between ${
@@ -301,8 +286,6 @@ export default function CartPage() {
                     35.00 PLN
                   </div>
                 </div>
-
-                {/* Pickup Option */}
                 <div
                   onClick={() => setDeliveryMethod("pickup")}
                   className={`p-4 border cursor-pointer transition-all flex items-center justify-between ${
@@ -336,8 +319,6 @@ export default function CartPage() {
                 </div>
               </div>
             </div>
-
-            {/* Metoda Płatności Section */}
             <div className='space-y-4 pt-2'>
               <h2 className='text-2xl font-bold uppercase tracking-wide text-background'>
                 Metoda Płatności
@@ -427,10 +408,7 @@ export default function CartPage() {
               </p>
             </div>
           </div>
-
-          {/* Right Column - Summary & Help */}
           <div className='lg:col-span-5 space-y-6 sticky top-24'>
-            {/* Summary Box */}
             <div className='bg-slate-950/90 border border-white/10 p-6 md:p-8 space-y-6'>
               <div className='text-center space-y-2 relative pb-4 border-b border-white/10'>
                 <h2 className='text-2xl font-bold uppercase tracking-wider text-background'>
@@ -438,8 +416,6 @@ export default function CartPage() {
                 </h2>
                 <div className='w-12 h-0.5 bg-primary mx-auto'></div>
               </div>
-
-              {/* Price Breakdown */}
               <div className='space-y-4 text-sm font-light text-slate-300'>
                 <div className='flex justify-between items-center'>
                   <span>Wartość produktów</span>
@@ -476,8 +452,6 @@ export default function CartPage() {
                   {grandTotal.toFixed(2)} <span className='text-lg font-normal'>PLN</span>
                 </span>
               </div>
-
-              {/* Auth prompt */}
               {!user && (
                 <div className='flex items-center gap-3 p-3 rounded-lg bg-amber-400/10 border border-amber-400/30'>
                   <LogIn className='w-5 h-5 text-amber-400 shrink-0' />
@@ -492,8 +466,6 @@ export default function CartPage() {
                   {formError}
                 </div>
               )}
-
-              {/* Order CTA */}
               <Button
                 onClick={handleOrder}
                 disabled={isOrdering}
@@ -505,8 +477,6 @@ export default function CartPage() {
               <p className='text-[10px] text-center text-slate-500 uppercase tracking-widest leading-relaxed'>
                 POTWIERDZAJĄC ZAMÓWIENIE AKCEPTUJESZ REGULAMIN SKLEPU
               </p>
-
-              {/* Trust Badges */}
               <div className='grid grid-cols-2 gap-3 pt-2 border-t border-white/10'>
                 <div className='p-3 border border-white/10 bg-slate-900/50 flex flex-col items-center justify-center text-center gap-1.5'>
                   <ShieldCheck className='w-5 h-5 text-chart-1' />
@@ -523,8 +493,6 @@ export default function CartPage() {
                 </div>
               </div>
             </div>
-
-            {/* Help Box */}
             <div className='p-5 bg-slate-950/90 border border-white/10 flex items-center gap-4'>
               <div className='p-3 bg-primary/20 border border-primary/30 text-chart-1 shrink-0'>
                 <Headphones className='w-6 h-6' />

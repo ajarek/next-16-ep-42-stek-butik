@@ -116,7 +116,6 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             className='fixed left-1/2 top-1/2 z-70 w-full max-w-md -translate-x-1/2 -translate-y-1/2 p-6'
           >
             <div className='relative overflow-hidden rounded-2xl bg-slate-900 border border-white/10 p-8 shadow-2xl'>
-              {/* Glassmorphism elements */}
               <div className='absolute -left-10 -top-10 h-40 w-40 rounded-full bg-red-500/20 blur-3xl' />
               <div className='absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-amber-500/20 blur-3xl' />
 

@@ -62,22 +62,16 @@ const emptyForm = {
 export default function AdminPage() {
   const { user } = useAuthStore()
   const [activeTab, setActiveTab] = useState<"products" | "transactions">("transactions")
-
-  // Products state
   const [products, setProducts] = useState<Steak[]>([])
   const [isLoadingProducts, setIsLoadingProducts] = useState(true)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState(emptyForm)
   const [saving, setSaving] = useState(false)
-
-  // Transactions state
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [isLoadingTransactions, setIsLoadingTransactions] = useState(true)
   const [updatingTxId, setUpdatingTxId] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState<TransactionStatus | "all">("all")
   const [searchQuery, setSearchQuery] = useState("")
-
-  // Global messages
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
@@ -263,8 +257,6 @@ export default function AdminPage() {
       setUpdatingTxId(null)
     }
   }
-
-  // Filtered transactions
   const filteredTransactions = transactions.filter((tx) => {
     const matchesStatus = statusFilter === "all" || tx.status === statusFilter
     const q = searchQuery.toLowerCase().trim()
@@ -274,8 +266,6 @@ export default function AdminPage() {
       (tx.userEmail && tx.userEmail.toLowerCase().includes(q))
     return matchesStatus && matchesQuery
   })
-
-  // Stats calculations
   const totalRevenue = transactions
     .filter((t) => t.status !== "cancelled")
     .reduce((acc, t) => acc + (t.totalAmount || 0), 0)
@@ -285,7 +275,6 @@ export default function AdminPage() {
   return (
     <main className='min-h-screen bg-foreground pt-24 pb-20 px-4 text-background'>
       <div className='max-w-5xl mx-auto space-y-6'>
-        {/* Header */}
         <div className='flex items-center justify-between gap-4 flex-wrap'>
           <div>
             <div className='flex items-center gap-2'>
@@ -309,8 +298,6 @@ export default function AdminPage() {
             </Link>
           </div>
         </div>
-
-        {/* Global Notifications */}
         <AnimatePresence>
           {error && (
             <motion.div
@@ -335,8 +322,6 @@ export default function AdminPage() {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Tabs switcher */}
         <div className='flex items-center gap-2 p-1.5 bg-slate-950/80 border border-white/10 rounded-2xl'>
           <button
             onClick={() => setActiveTab("transactions")}
@@ -382,11 +367,8 @@ export default function AdminPage() {
             </span>
           </button>
         </div>
-
-        {/* TRANSACTIONS TAB */}
         {activeTab === "transactions" && (
           <div className='space-y-6'>
-            {/* Stats bar */}
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
               <div className='bg-slate-950/80 border border-white/10 rounded-2xl p-4 flex items-center gap-4'>
                 <div className='w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0'>
@@ -430,11 +412,8 @@ export default function AdminPage() {
                 </div>
               </div>
             </div>
-
-            {/* Filter and Search Bar */}
             <div className='bg-slate-950/80 border border-white/10 rounded-2xl p-4 space-y-4'>
               <div className='flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4'>
-                {/* Search */}
                 <div className='relative flex-1'>
                   <Search className='w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400' />
                   <input
@@ -445,8 +424,6 @@ export default function AdminPage() {
                     className='w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400'
                   />
                 </div>
-
-                {/* Refresh */}
                 <button
                   onClick={loadTransactions}
                   disabled={isLoadingTransactions}
@@ -456,8 +433,6 @@ export default function AdminPage() {
                   Odśwież
                 </button>
               </div>
-
-              {/* Status Filter Pills */}
               <div className='flex items-center gap-2 flex-wrap pt-2 border-t border-white/5 text-xs'>
                 <span className='text-slate-400 font-semibold mr-1 uppercase tracking-wider'>Status:</span>
                 {[
@@ -482,8 +457,6 @@ export default function AdminPage() {
                 ))}
               </div>
             </div>
-
-            {/* Transactions List */}
             {isLoadingTransactions ? (
               <div className='bg-slate-950/80 border border-white/10 rounded-2xl p-12 text-center space-y-3'>
                 <Loader2 className='w-8 h-8 animate-spin text-amber-400 mx-auto' />
@@ -521,7 +494,6 @@ export default function AdminPage() {
                       animate={{ opacity: 1, y: 0 }}
                       className='bg-slate-950/80 border border-white/10 rounded-2xl p-5 space-y-4 hover:border-white/20 transition-all'
                     >
-                      {/* Card Header */}
                       <div className='flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10'>
                         <div className='space-y-1'>
                           <div className='flex items-center gap-2 flex-wrap'>
@@ -539,8 +511,6 @@ export default function AdminPage() {
                             <span>{tx.userEmail}</span>
                           </div>
                         </div>
-
-                        {/* Status selector component */}
                         <div className='flex items-center gap-3 self-start md:self-auto'>
                           <div className='text-right'>
                             <span className='text-xs font-semibold text-slate-400 block uppercase tracking-wider mb-1'>
@@ -572,8 +542,6 @@ export default function AdminPage() {
                           </div>
                         </div>
                       </div>
-
-                      {/* Items breakdown */}
                       <div className='space-y-2'>
                         <p className='text-xs font-bold uppercase tracking-wider text-slate-400'>
                           Zamówione produkty ({tx.items?.length || 0}):
@@ -610,8 +578,6 @@ export default function AdminPage() {
                           ))}
                         </div>
                       </div>
-
-                      {/* Delivery & Payment details footer */}
                       <div className='pt-3 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs'>
                         <div className='flex items-center gap-3 flex-wrap'>
                           <span className='inline-flex items-center gap-1.5 bg-slate-900 border border-white/10 px-2.5 py-1 rounded-lg text-slate-300'>
@@ -651,11 +617,8 @@ export default function AdminPage() {
             )}
           </div>
         )}
-
-        {/* PRODUCTS TAB */}
         {activeTab === "products" && (
           <div className='space-y-6'>
-            {/* Form */}
             <form
               onSubmit={handleSubmit}
               className='bg-slate-950/80 border border-white/10 rounded-2xl p-6 space-y-4'
@@ -734,8 +697,6 @@ export default function AdminPage() {
                     className='w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-400 resize-none'
                   />
                 </label>
-
-                {/* Pola Steak */}
                 <label className='block space-y-1'>
                   <span className='text-xs font-semibold text-slate-400'>Tag (opcjonalny)</span>
                   <input
@@ -821,8 +782,6 @@ export default function AdminPage() {
                   : "Dodaj produkt"}
               </Button>
             </form>
-
-            {/* Product list */}
             <div className='space-y-3'>
               <h2 className='font-bold uppercase tracking-wide text-slate-300'>
                 Produkty w sklepie ({products.length})

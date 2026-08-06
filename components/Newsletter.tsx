@@ -7,7 +7,6 @@ import { toast } from "./ui/toast"
 const Newsletter = () => {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Tutaj możesz dodać logikę formularza
     toast.promise(
       new Promise<{ name: string }>((resolve) => {
         window.setTimeout(

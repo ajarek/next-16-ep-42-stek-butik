@@ -41,11 +41,6 @@ function toSteak(data: Record<string, unknown>, id: string): Steak {
     marbling: data.marbling as string | undefined,
   }
 }
-
-/**
- * Fetch all products from the "steaks" collection, mapped to the
- * display shape used by the shop (product list, cart).
- */
 export async function getProducts(): Promise<Product[]> {
   const snapshot = await getDocs(collection(db, STEAKS_COLLECTION))
   const products = snapshot.docs.map((docSnap) =>
@@ -55,11 +50,6 @@ export async function getProducts(): Promise<Product[]> {
     (a, b) => Number(a.id) - Number(b.id) || a.name.localeCompare(b.name),
   )
 }
-
-/**
- * Fetch all steaks from the "steaks" collection (full schema,
- * used by the admin panel and product detail page).
- */
 export async function getSteaks(): Promise<Steak[]> {
   const snapshot = await getDocs(collection(db, STEAKS_COLLECTION))
   return snapshot.docs
@@ -70,22 +60,13 @@ export async function getSteaks(): Promise<Steak[]> {
       (a, b) => Number(a.id) - Number(b.id) || a.title.localeCompare(b.title),
     )
 }
-
-/**
- * Fetch a single steak by ID (full schema).
- */
 export async function getSteakById(id: string): Promise<Steak | null> {
   const docRef = doc(db, STEAKS_COLLECTION, id)
   const docSnap = await getDoc(docRef)
   if (!docSnap.exists()) return null
   return toSteak(docSnap.data() as Record<string, unknown>, docSnap.id)
 }
-
-/**
- * Add a new product to the "steaks" collection.
- */
 export async function addProduct(product: ProductInput): Promise<string> {
-  // Build the document — only include optional fields when they have a value
   const payload: Record<string, unknown> = {
     title: product.name,
     price: String(product.price),
@@ -106,10 +87,6 @@ export async function addProduct(product: ProductInput): Promise<string> {
   const docRef = await addDoc(collection(db, STEAKS_COLLECTION), payload)
   return docRef.id
 }
-
-/**
- * Update an existing product in the "steaks" collection (admin only).
- */
 export async function updateProduct(
   id: string,
   product: Partial<ProductInput>,
@@ -155,10 +132,6 @@ export async function updateProduct(
 
   await updateDoc(docRef, payload)
 }
-
-/**
- * Delete a product from the "steaks" collection (admin only).
- */
 export async function deleteProduct(id: string): Promise<void> {
   const docRef = doc(db, STEAKS_COLLECTION, id)
   await deleteDoc(docRef)
