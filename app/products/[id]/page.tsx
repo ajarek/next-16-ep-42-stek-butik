@@ -220,9 +220,6 @@ const ProductDetailsPage = ({
               </>
             )}
           </Button>
-          <Button className='h-12 w-full border bg-foreground/30  border-background text-background  font-bold uppercase tracking-widest hover:bg-foreground/10 transition-all active:scale-[0.98] cursor-pointer rounded-none'>
-            Kup teraz z dostawą jutro
-          </Button>
         </div>
         <div className='flex items-center gap-6 pt-4 border-t border-white text-background'>
           <div className='flex items-center gap-2'>
