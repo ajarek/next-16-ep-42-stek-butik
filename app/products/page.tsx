@@ -62,18 +62,8 @@ export default function ProductsPage() {
     };
   }, [products]);
 
-  useEffect(() => {
-    // Don't lock the slider to 0 while products are still loading.
-    // Otherwise maxPrice becomes 0 and all items get filtered out.
-    if (priceBounds.max <= 0) return;
-    setMaxPrice((current) =>
-      current === null
-        ? priceBounds.max
-        : Math.min(current, priceBounds.max),
-    );
-  }, [priceBounds.max]);
-
-  const activePrice = maxPrice ?? priceBounds.max;
+  const activePrice =
+    maxPrice === null ? priceBounds.max : Math.min(maxPrice, priceBounds.max);
 
   const filteredProducts = useMemo(() => {
     const q = query.toLowerCase().trim();
