@@ -67,7 +67,7 @@ export default function ProductsPage() {
     // Otherwise maxPrice becomes 0 and all items get filtered out.
     if (priceBounds.max <= 0) return;
     setMaxPrice((current) =>
-      current === null || current === 0
+      current === null
         ? priceBounds.max
         : Math.min(current, priceBounds.max),
     );
@@ -173,7 +173,7 @@ export default function ProductsPage() {
             </select>
           </div>
 
-          <div className="flex items-center gap-4 min-w-[200px]">
+          <div className="flex items-center gap-4 min-w-50">
             <SlidersHorizontal className="w-5 h-5 text-chart-1" />
             <div className="flex-1 flex flex-col gap-1">
               <div className="flex justify-between text-xs text-chart-1">
